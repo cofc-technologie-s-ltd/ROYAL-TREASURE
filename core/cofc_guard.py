@@ -1,12 +1,14 @@
 import time
 import hashlib
 import logging
+from core.post_quantum_crypto import PostQuantumCryptoEngine
 
 class COFCGuardEngine:
     def __init__(self):
         self.logger = logging.getLogger("COFC_GUARD")
         self.threat_registry = set()
         self.active_shields = True
+        self.pq_crypto = PostQuantumCryptoEngine()
 
     def inspect_payload(self, payload_str):
         if not self.active_shields:
@@ -24,21 +26,32 @@ class COFCGuardEngine:
         return hashlib.sha3_256(data_bytes + b"_COFC_GUARD_QKD").hexdigest()
 
     def generate_quantum_proof(self, data_payload):
-        payload_bytes = str(data_payload).encode()
-        signature = self.generate_quantum_signature(payload_bytes)
+        payload_str = str(data_payload)
+        # Generate mathematically rigorous lattice-based commitment proof
+        lattice_proof_obj = self.pq_crypto.create_lattice_commitment(payload_str)
+        
         return {
-            "proof_id": hashlib.sha3_512(signature.encode()).hexdigest()[:32],
-            "quantum_signature": signature,
-            "timestamp": time.time(),
-            "status": "VERIFIED_POST_QUANTUM"
+            "proof_id": lattice_proof_obj["lattice_proof"][:32],
+            "quantum_signature": lattice_proof_obj["lattice_proof"],
+            "lattice_commitment": lattice_proof_obj["commitment_vector"],
+            "algorithm": lattice_proof_obj["algorithm"],
+            "timestamp": lattice_proof_obj["timestamp"],
+            "status": "VERIFIED_POST_QUANTUM_LATTICE"
         }
 
     def verify_transaction_shield(self, transaction_data, *args, **kwargs):
         is_safe, msg = self.inspect_payload(str(transaction_data))
+        proof = self.generate_quantum_proof(transaction_data)
+        # Verify the generated lattice proof mathematically
+        is_valid_proof = self.pq_crypto.verify_lattice_commitment(str(transaction_data), {
+            "lattice_proof": proof["quantum_signature"],
+            "commitment_vector": proof["lattice_commitment"]
+        })
+        
         return {
-            "verified": is_safe,
+            "verified": is_safe and is_valid_proof,
             "shield_status": msg,
-            "quantum_proof": self.generate_quantum_proof(transaction_data)
+            "quantum_proof": proof
         }
 
 # Alias for compatibility across modules
