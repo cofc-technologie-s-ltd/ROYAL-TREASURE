@@ -9,11 +9,13 @@ from core.ledger import SovereignLedger
 from core.wallet_gateway import SovereignWalletManager
 from core.iso_gateway import ISO20022SovereignGateway
 from core.cofc_guard import COFCGuardShield
+from core.cash_protocol import CASHProtocolEngine
 
 ledger = SovereignLedger()
 wallet_mgr = SovereignWalletManager()
 iso_gateway = ISO20022SovereignGateway()
 cofc_guard = COFCGuardShield()
+cash_engine = CASHProtocolEngine()
 
 class EnterpriseSovereignHandler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
@@ -30,7 +32,7 @@ class EnterpriseSovereignHandler(http.server.BaseHTTPRequestHandler):
             with open("data/treasury_state.json", "r") as sf:
                 state = json.load(sf)
             response = {
-                "node": "COFC-ENTERPRISE-NODE-v2.3-GUARDED",
+                "node": "COFC-ENTERPRISE-NODE-v2.3-CASH",
                 "consensus": "RPoS-SHA3-512 + COFC-GUARD",
                 "block_height": latest["height"],
                 "assets": state,
@@ -51,8 +53,8 @@ class EnterpriseSovereignHandler(http.server.BaseHTTPRequestHandler):
                 "target_algorithm": "SHA3-512"
             }
             self.wfile.write(json.dumps(response, indent=2).encode())
-        elif "/api/v1/block/latest" in path:
-            response = ledger.get_latest_block()
+        elif "/api/v1/cash/metrics" in path:
+            response = cash_engine.get_batch_metrics()
             self.wfile.write(json.dumps(response, indent=2).encode())
         else:
             self.wfile.write(json.dumps({"status": "ok", "endpoint": path}).encode())
@@ -78,18 +80,18 @@ class EnterpriseSovereignHandler(http.server.BaseHTTPRequestHandler):
             new_height = ledger.append_block(validator, asset_type, block_hash)
             response = {
                 "status": "success", 
-                "message": f"Block #{new_height} verified and anchored via RPoS with COFC GUARD.",
+                "message": f"Block #{new_height} verified and anchored.",
                 "height": new_height
             }
             self.wfile.write(json.dumps(response).encode())
-        elif "/api/v1/wallet/transfer" in self.path:
+        elif "/api/v1/cash/transfer" in self.path:
             sender = data.get("sender", "COFC_VALIDATOR_1")
             recipient = data.get("recipient", "TREASURY_ROOT")
-            asset_type = data.get("asset_type", "GOLD")
             amount = float(data.get("amount", 0.0))
+            asset = data.get("asset", "CASH")
 
-            res = wallet_mgr.transfer_asset(sender, recipient, asset_type, amount)
-            self.wfile.write(json.dumps(res).encode())
+            res = cash_engine.submit_zero_fee_transfer(sender, recipient, amount, asset)
+            self.wfile.write(json.dumps(res, indent=2).encode())
         elif "/api/v1/institutional/iso20022_settlement" in self.path:
             sender = data.get("sender", "COFC_VALIDATOR_1")
             recipient = data.get("recipient", "TREASURY_ROOT")
@@ -102,14 +104,11 @@ class EnterpriseSovereignHandler(http.server.BaseHTTPRequestHandler):
                 response = {
                     "status": "success",
                     "transfer_result": transfer_res,
-                    "iso20022_message": iso_msg,
-                    "guard_status": "PROTECTED_POST_QUANTUM"
+                    "iso20022_message": iso_msg
                 }
             else:
                 response = {"status": "error", "message": transfer_res.get("message")}
             self.wfile.write(json.dumps(response, indent=2).encode())
-        elif "/api/v1/miner/register" in self.path:
-            self.wfile.write(json.dumps({"status": "registered", "gateway": "active"}).encode())
         else:
             self.wfile.write(json.dumps({"status": "success", "received": True}).encode())
 
@@ -118,9 +117,5 @@ class EnterpriseSovereignHandler(http.server.BaseHTTPRequestHandler):
 
 if __name__ == "__main__":
     server = http.server.HTTPServer(("127.0.0.1", 8545), EnterpriseSovereignHandler)
-    print("[+] Enterprise Sovereign Node v2.3 with COFC GUARD running on http://127.0.0.1:8545...")
+    print("[+] Enterprise Sovereign Node v2.3 with CASH Protocol running on http://127.0.0.1:8545...")
     server.serve_forever()
-
-# --- CASH Protocol Endpoint Extension ---
-from core.cash_protocol import CASHProtocolEngine
-cash_engine = CASHProtocolEngine()
