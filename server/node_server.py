@@ -8,19 +8,21 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from core.oracle_gateway import OracleGateway
 from core.pqc_guard import PostQuantumGuardEngine
+from tools.liquidity_simulator import TriAssetLiquidityPool
 
 logger = logging.getLogger("NODE_SERVER")
 oracle = OracleGateway()
 pqc_engine = PostQuantumGuardEngine(security_level=5)
-
-# יצירת מפתח קוונטי מובנה למנהל הראשי של הצומת לפעστη העברות
 node_pqc_keys = pqc_engine.generate_lattice_keypair()
+
+# אתחול בריכת נזילות ארגונית מובנית בשרת
+amm_pool = TriAssetLiquidityPool(gold_reserves=500000.0, key_reserves=25000.0, gem_reserves=5000.0)
 
 HTML_DASHBOARD = """<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ROYAL-TREASURE Enterprise Dashboard (v2.9.3)</title>
+    <title>ROYAL-TREASURE Enterprise Dashboard (v3.0.1)</title>
     <style>
         body { background-color: #0d1117; color: #c9d1d9; font-family: monospace; padding: 20px; }
         .card { background: #161b22; border: 1px solid #30363d; padding: 20px; border-radius: 6px; margin-bottom: 20px; }
@@ -31,15 +33,15 @@ HTML_DASHBOARD = """<!DOCTYPE html>
 </head>
 <body>
     <div class="card">
-        <h1>👑 ROYAL-TREASURE Sovereign Node (v2.9.3)</h1>
-        <p>Security Layer: <span class="pqc-badge">CRYSTALS-Dilithium-V (NIST Level 5 PQC Active)</span></p>
+        <h1>👑 ROYAL-TREASURE Sovereign Node (v3.0.1)</h1>
+        <p>Security Layer: <span class="pqc-badge">CRYSTALS-Dilithium-V & Zero-Fee AMM Active</span></p>
         <p>Node Status: <span id="status" class="metric">Loading...</span></p>
     </div>
     <div class="card">
-        <h2>⚡ Live Oracle Gold Price & Quantum Stats</h2>
+        <h2>⚡ Live Oracle Gold Price & AMM Liquidity</h2>
         <p>Spot Price: <span id="price" class="metric">Loading...</span></p>
         <p>Active PQC Algorithm: <span id="pqc_algo">-</span></p>
-        <p>PQC Public Key Fingerprint: <span id="pqc_pub" style="font-size: 12px; color: #8b949e;">-</span></p>
+        <p>Pool Reserves: GOLD: <span id="pool_gold">-</span> | KEY: <span id="pool_key">-</span></p>
     </div>
     <script>
         async function fetchMetrics() {
@@ -49,10 +51,9 @@ HTML_DASHBOARD = """<!DOCTYPE html>
                 document.getElementById('status').innerText = data.node_status;
                 document.getElementById('price').innerText = '$' + data.live_gold_price + ' USD/oz';
                 document.getElementById('pqc_algo').innerText = data.pqc_algorithm + ' (' + data.nist_level + ')';
-                document.getElementById('pqc_pub').innerText = data.pqc_public_key;
-            } catch (e) {
-                console.error(e);
-            }
+                document.getElementById('pool_gold').innerText = data.pool_reserves.GOLD;
+                document.getElementById('pool_key').innerText = data.pool_reserves.KEY;
+            } catch (e) { console.error(e); }
         }
         fetchMetrics();
         setInterval(fetchMetrics, 5000);
@@ -74,26 +75,44 @@ class SovereignDashboardHandler(http.server.SimpleHTTPRequestHandler):
             self.end_headers()
             oracle_data = oracle.fetch_live_gold_price()
             metrics = {
-                "node_status": "ONLINE (Enterprise v2.9.3 PQC)",
+                "node_status": "ONLINE (Enterprise v3.0.1 AMM)",
                 "live_gold_price": oracle_data.get("price_usd"),
                 "pqc_algorithm": node_pqc_keys.get("algorithm"),
                 "nist_level": node_pqc_keys.get("nist_security_level"),
-                "pqc_public_key": node_pqc_keys.get("public_key")[:32] + "..."
+                "pool_reserves": amm_pool.reserves
             }
             self.wfile.write(json.dumps(metrics, indent=4).encode("utf-8"))
         else:
             self.send_response(404)
             self.end_headers()
-            self.wfile.write(b"404 Not Found - Royal Treasure Node v2.9.3")
+            self.wfile.write(b"404 Not Found")
+
+    def do_POST(self):
+        if self.path == "/api/swap":
+            content_length = int(self.headers.get('Content-Length', 0))
+            body = self.rfile.read(content_length).decode('utf-8')
+            try:
+                data = json.loads(body)
+                res = amm_pool.swap_assets(
+                    input_asset=data.get("input_asset"),
+                    output_asset=data.get("output_asset"),
+                    amount_in=float(data.get("amount_in", 0.0)),
+                    max_slippage=float(data.get("max_slippage", 0.05))
+                )
+                self.send_response(200)
+                self.send_header("Content-Type", "application/json")
+                self.end_headers()
+                self.wfile.write(json.dumps(res, indent=4).encode("utf-8"))
+            except Exception as e:
+                self.send_response(400)
+                self.end_headers()
+                self.wfile.write(json.dumps({"error": str(e)}).encode("utf-8"))
 
 def run_server(port=8080):
     handler = SovereignDashboardHandler
     with socketserver.TCPServer(("", port), handler) as httpd:
-        logger.info(f"[+] Sovereign PQC Node Server running on port {port}...")
-        try:
-            httpd.serve_forever()
-        except KeyboardInterrupt:
-            logger.info("[-] Server stopped by user.")
+        logger.info(f"[+] Sovereign PQC AMM Server running on port {port}...")
+        httpd.serve_forever()
 
 if __name__ == "__main__":
     run_server()
