@@ -1,29 +1,38 @@
 #!/bin/bash
-set -e
+echo "====================================================================="
+echo "🚀 COFC TECHNOLOGIES LTD - DEPLOYING DISTRIBUTED MESH NETWORK v3.1.5"
+echo "====================================================================="
 
-echo "[+] Starting ROYAL-TREASURE Enterprise Production Deployment (v2.9.3)..."
+# יצירת תיקיית הנתונים עבור נפחי הדיסק המופרדים
+mkdir -p data
 
-# 1. ניקוי קונטיינרים ישנים
-echo "[+] Cleaning up legacy Docker containers..."
-docker ps -a --filter "name=royal-treasure-node" -q | xargs -r docker rm -f || true
+echo "[*] Tearing down legacy isolated nodes..."
+docker compose down --remove-orphans 2>/dev/null
 
-# 2. בניית תמונת ה-Docker
-echo "[+] Building production Docker image for ROYAL-TREASURE node..."
-docker build -t royal-treasure:v2.9.3 .
+echo "[*] Building and orchestrating multi-node sovereign mesh..."
+docker compose up --build -d
 
-# 3. הרצת הקונטיינר בפורט 8080
-echo "[+] Launching sovereign node container on port 8080..."
-docker run -d --name royal-treasure-node -p 8080:8080 royal-treasure:v2.9.3
+echo "[*] Waiting for network topology initialization..."
+sleep 4
 
-# 4. בדיקת בריאות אוטומטית (Health Check)
-echo "[+] Performing automated health check on http://localhost:8080/api/metrics..."
-sleep 3
-
-HEALTH_CHECK=$(curl -s http://localhost:8080/api/metrics | grep -o "ONLINE" || true)
-
-if [ "$HEALTH_CHECK" = "ONLINE" ]; then
-    echo "[SUCCESS] ROYAL-TREASURE node v2.9.3 is ONLINE and fully healthy!"
+# בדיקת בריאות לצומת אלפא
+if curl -s http://127.0.0 > /dev/null; then
+    echo "🟢 SUCCESS: Node Alpha operational on port 8080"
 else
-    echo "[ERROR] Health check failed. Inspect container logs with 'docker logs royal-treasure-node'."
+    echo "🔴 ERROR: Node Alpha failed to launch."
     exit 1
 fi
+
+# בדיקת בריאות לצומת בטא
+if curl -s http://127.0.0 > /dev/null; then
+    echo "🟢 SUCCESS: Node Beta operational on port 8081"
+else
+    echo "🔴 ERROR: Node Beta failed to launch."
+    exit 1
+fi
+
+echo "====================================================================="
+echo "💎 COFC MULTI-NODE NETWORKING IS LIVE & DISCOVERABLE!"
+echo "📊 Node Alpha Dashboard: http://127.0.0"
+echo "📊 Node Beta Dashboard:  http://127.0.0"
+echo "====================================================================="

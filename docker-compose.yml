@@ -1,14 +1,30 @@
 version: '3.8'
 
 services:
-  royal-treasure-node:
+  # צומת ראשי - Node Alpha
+  node-alpha:
     build: .
-    container_name: cofc_enterprise_sovereign_node
+    container_name: cofc_sovereign_node_alpha
     restart: always
     ports:
       - "8080:8080"
     volumes:
-      - ./ledger_db.sqlite:/app/ledger_db.sqlite
+      - ./data/ledger_alpha.sqlite:/app/ledger_db.sqlite
     environment:
-      - NODE_ID=COFC_PROD_NODE_01
-      - SECURE_LEDGER=ENABLED
+      - NODE_ID=COFC_NODE_ALPHA
+      - ENVIRONMENT=PRODUCTION
+      - PEER_NODES=http://node-beta:8081
+
+  # צומת משני - Node Beta
+  node-beta:
+    build: .
+    container_name: cofc_sovereign_node_beta
+    restart: always
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./data/ledger_beta.sqlite:/app/ledger_db.sqlite
+    environment:
+      - NODE_ID=COFC_NODE_BETA
+      - ENVIRONMENT=PRODUCTION
+      - PEER_NODES=http://node-alpha:8080
