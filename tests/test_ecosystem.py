@@ -1,43 +1,62 @@
-import requests
-import json
-import time
+import unittest
+import sys
+import os
 
-API_URL = "http://127.0.0.1:8545/api/v1"
+# הוספת תיקיית האב לנתיב הייבוא
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from core.wallet_manager import WalletManager
+from core.iso_gateway import ISOGateway
+from core.cofc_guard import COFCGuardEngine
 
-def test_node_health():
-    print("[*] Testing Node Health & Status...")
-    res = requests.get(f"{API_URL}/network/status")
-    assert res.status_code == 200, "Node server is not responding"
-    data = res.json()
-    print(f"[+] Node Status OK: Height #{data.get('block_height')} | Assets: {list(data.get('assets', {}).keys())}")
+class TestRoyalTreasureEcosystem(unittest.TestCase):
+    
+    def setUp(self):
+        self.wallet_mgr = WalletManager()
+        self.iso_gateway = ISOGateway()
+        self.guard = COFCGuardEngine()
 
-def test_wallet_balance():
-    print("[*] Testing Wallet Balance Retrieval...")
-    res = requests.get(f"{API_URL}/wallet/balance?address=COFC_VALIDATOR_1&asset=GOLD")
-    assert res.status_code == 200, "Failed to get wallet balance"
-    data = res.json()
-    print(f"[+] Wallet Balance OK: {data.get('address')} holds {data.get('balance')} {data.get('asset')}")
+    def test_wallet_transfer_logic(self):
+        """ בדיקת תקינות העברות נכסים ומניעת חריגות יתרה במסד הנתונים """
+        # העברה תקינה מותרת (מתוך ה-DEV_VAULT)
+        res = self.wallet_mgr.transfer_asset("DEV_VAULT", "QA_TEST_NODE", "GOLD", 5.0)
+        self.assertEqual(res["status"], "SUCCESS")
+        
+        # בדיקת מניעת שליחה בסכום שלילי
+        negative_res = self.wallet_mgr.transfer_asset("DEV_VAULT", "QA_TEST_NODE", "GOLD", -10.0)
+        self.assertEqual(negative_res["status"], "FAILED")
 
-def test_institutional_settlement():
-    print("[*] Testing Institutional ISO 20022 Settlement Gateway...")
-    payload = {
-        "sender": "COFC_VALIDATOR_1",
-        "recipient": "TREASURY_ROOT",
-        "asset_type": "GOLD",
-        "amount": 10.0
-    }
-    res = requests.post(f"{API_URL}/institutional/iso20022_settlement", json=payload)
-    assert res.status_code == 200, "Institutional settlement request failed"
-    data = res.json()
-    assert data.get("status") == "success", "Settlement was rejected"
-    print(f"[+] ISO 20022 Settlement OK: Message ID {data.get('iso20022_message', {}).get('AppHdr', {}).get('BizMsgIdr')}")
+        # בדיקת חסימת גישה ישירה לכתובת השרש TREASURY_ROOT ללא חתימה
+        treasury_res = self.wallet_mgr.transfer_asset("TREASURY_ROOT", "QA_TEST_NODE", "GOLD", 1.0)
+        self.assertEqual(treasury_res["status"], "FAILED")
+
+    def test_iso_gateway_validation(self):
+        """ בדיקת קשיחות שער ה-ISO 20022 להודעות pacs.008 """
+        # יצרת הודעת XML תקנית לבדיקה
+        valid_xml = self.iso_gateway.generate_pacs_008_message(
+            sender_bic="DEUTDEMMXXX",
+            recv_bic="BNPAFRPPXXX",
+            amount=2500.0,
+            currency="EUR",
+            ref_id="REF-2026-QA-001"
+        )
+        result = self.iso_gateway.validate_and_route(valid_xml)
+        self.assertEqual(result["status"], "SETTLED")
+        self.assertEqual(result["iso_compliance"], "COMPLIANT_PASS")
+
+        # בדיקת דחיית הודעה עם קוד BIC לא תקין
+        invalid_xml = valid_xml.replace("<BICFI>DEUTDEMMXXX</BICFI>", "<BICFI>INVALID</BICFI>")
+        bad_result = self.iso_gateway.validate_and_route(invalid_xml)
+        self.assertEqual(bad_result["status"], "REJECTED")
+
+    def test_cofc_guard_payload(self):
+        """ בדיקת חומת האש כנגד הזרקות ופ payloads זדוניים """
+        safe_payload = '{"sender": "DEV", "recipient": "NODE", "amount": 10}'
+        is_safe, _ = self.guard.inspect_payload(safe_payload)
+        self.assertTrue(is_safe)
+
+        malicious_payload = '<script>alert("XSS")</script>'
+        is_safe_mal, _ = self.guard.inspect_payload(malicious_payload)
+        self.assertFalse(is_safe_mal)
 
 if __name__ == "__main__":
-    print("=== STARTING ROYAL-TREASURE INTEGRATION TESTS ===")
-    try:
-        test_node_health()
-        test_wallet_balance()
-        test_institutional_settlement()
-        print("=== ALL TESTS PASSED SUCCESSFULLY ===")
-    except Exception as e:
-        print(f"[-] Test failed: {e}")
+    unittest.main()
