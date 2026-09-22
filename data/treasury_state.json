@@ -1,18 +1,18 @@
 {
-  "GOLD": {
-    "balance": 1000.0,
-    "mined": 0
-  },
-  "KEY": {
-    "balance": 500.0,
-    "mined": 0
-  },
-  "GEM": {
-    "balance": 750.0,
-    "mined": 0
-  },
-  "CASH": {
-    "balance": 10000.0,
-    "mined": 0
-  }
+    "GOLD": {
+        "balance": 1000.0,
+        "mined": 10
+    },
+    "KEY": {
+        "balance": 500.0,
+        "mined": 10
+    },
+    "GEM": {
+        "balance": 750.0,
+        "mined": 10
+    },
+    "CASH": {
+        "balance": 10000.0,
+        "mined": 0
+    }
 }
