@@ -25,7 +25,7 @@ class AbsoluteMindEngine:
             "reason": "Liquidity parameters are within optimal equilibrium."
         }
         
-        if gold_bal > 100.0:
+        if isinstance(gold_bal, (int, float)) and gold_bal > 100.0:
             res = self.cash_engine.submit_zero_fee_transfer(
                 sender=self.node_address,
                 recipient="TREASURY_ROOT",

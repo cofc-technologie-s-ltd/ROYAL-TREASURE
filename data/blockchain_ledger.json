@@ -1111,5 +1111,389 @@
         "validator": "COFC_VALIDATOR_1",
         "asset_type": "GOLD",
         "timestamp": "2026-09-22T19:55:16.448905"
+    },
+    {
+        "height": 140,
+        "previous_hash": "1354b5b65bd3a593a6c7884757954a89f3afe8dc2788ecf7a11686748fe37e3e7ce1e461b0404c0daab7b6cb728f51f10a944c7739691a76e6bc2ce09c42c72b",
+        "hash": "4d24f4a1caa6f3f8926bc2a5e33969533bcbea80ba78eeaefb30c2e72650516195972924d708a1a3c4ef558ae3fdbe7d78e3d427facb8db4ac9a688f8879b16b",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "GOLD",
+        "timestamp": "2026-09-22T19:55:29.152010"
+    },
+    {
+        "height": 141,
+        "previous_hash": "4d24f4a1caa6f3f8926bc2a5e33969533bcbea80ba78eeaefb30c2e72650516195972924d708a1a3c4ef558ae3fdbe7d78e3d427facb8db4ac9a688f8879b16b",
+        "hash": "d6b5d4851ee5fe40e3ff2f17dd39d1ea67de2c38c3ba48f9490cf427de4808ecd6bf71bc07cb216911d13bf90cd4f724f28161b618a27ddeb6d040e1545b6c06",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "GEM",
+        "timestamp": "2026-09-22T19:55:29.247239"
+    },
+    {
+        "height": 142,
+        "previous_hash": "d6b5d4851ee5fe40e3ff2f17dd39d1ea67de2c38c3ba48f9490cf427de4808ecd6bf71bc07cb216911d13bf90cd4f724f28161b618a27ddeb6d040e1545b6c06",
+        "hash": "8965b7d7a78da5471be45844b060ca79305aa30e23e7e6b0f93edebe00e1addf150be18689d54ae94a9e1159d2c0055334fb4c95e9959ec8c7bcaa592558ab75",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "KEY",
+        "timestamp": "2026-09-22T19:55:29.343224"
+    },
+    {
+        "height": 143,
+        "previous_hash": "8965b7d7a78da5471be45844b060ca79305aa30e23e7e6b0f93edebe00e1addf150be18689d54ae94a9e1159d2c0055334fb4c95e9959ec8c7bcaa592558ab75",
+        "hash": "2d0babcbb522def237c36b92ef9cf09492b9366d28762456eafd32149b938fffe2a68d005c48a7af9d37bcd3de5a37e16e5b9236f8c8f5701fbf6da3e2f7de30",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "GOLD",
+        "timestamp": "2026-09-22T19:55:32.265195"
+    },
+    {
+        "height": 144,
+        "previous_hash": "2d0babcbb522def237c36b92ef9cf09492b9366d28762456eafd32149b938fffe2a68d005c48a7af9d37bcd3de5a37e16e5b9236f8c8f5701fbf6da3e2f7de30",
+        "hash": "caa986540930d65917e6216421c9c327f77e0a8bf9b712138495125425e1930ca97de4d7ac2148116d5f69593209de05cc5c72d2ddd232e3723d7443163d86ac",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "GEM",
+        "timestamp": "2026-09-22T19:55:32.288528"
+    },
+    {
+        "height": 145,
+        "previous_hash": "caa986540930d65917e6216421c9c327f77e0a8bf9b712138495125425e1930ca97de4d7ac2148116d5f69593209de05cc5c72d2ddd232e3723d7443163d86ac",
+        "hash": "11cb330d2353a1097a1542b7567bc12b6ce9bc4274e5b968943b9f6670546337208653178335176bfb18f271b9275dd3e7be2f7d3acccb0ccc0d6d6d24c7ff93",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "KEY",
+        "timestamp": "2026-09-22T19:55:32.388073"
+    },
+    {
+        "height": 146,
+        "previous_hash": "11cb330d2353a1097a1542b7567bc12b6ce9bc4274e5b968943b9f6670546337208653178335176bfb18f271b9275dd3e7be2f7d3acccb0ccc0d6d6d24c7ff93",
+        "hash": "4625c7ef0202aeab3d0b03a369d22caf51662caeb91ca5dc876c2bb56af66f4b366b99c5fac670472bbaeb36a9bf197287c1d4a2d94acd9df5e7afb4a2d34f99",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "GOLD",
+        "timestamp": "2026-09-22T19:55:35.308339"
+    },
+    {
+        "height": 147,
+        "previous_hash": "4625c7ef0202aeab3d0b03a369d22caf51662caeb91ca5dc876c2bb56af66f4b366b99c5fac670472bbaeb36a9bf197287c1d4a2d94acd9df5e7afb4a2d34f99",
+        "hash": "6b0766bc1167d29eeda155513bfbfcd8d18df7f292d4130fc695601ff20656d996930ac000466a7b58b5bde1d209c0d04870e501b61e08b3fe84623d07f9194e",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "GEM",
+        "timestamp": "2026-09-22T19:55:35.332385"
+    },
+    {
+        "height": 148,
+        "previous_hash": "6b0766bc1167d29eeda155513bfbfcd8d18df7f292d4130fc695601ff20656d996930ac000466a7b58b5bde1d209c0d04870e501b61e08b3fe84623d07f9194e",
+        "hash": "8fb92fb00608c3321837f965eb2b0229c1ef770320e4a516a0485095012957f7e03154b8bb4dea32ddf8b2edf48e27302c84edab7dc854c1da046be5fb13f1f4",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "KEY",
+        "timestamp": "2026-09-22T19:55:35.423902"
+    },
+    {
+        "height": 149,
+        "previous_hash": "8fb92fb00608c3321837f965eb2b0229c1ef770320e4a516a0485095012957f7e03154b8bb4dea32ddf8b2edf48e27302c84edab7dc854c1da046be5fb13f1f4",
+        "hash": "18f4ac1d1cfcac1c1bc6f6a0886270f6ab772bfafaa432f1bb54bcf5cc737789f7ad85c4ac73671130253cfe85857c2051d6c6d9eb5f3700ecd41cf9e17b305e",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "GOLD",
+        "timestamp": "2026-09-22T19:55:38.361748"
+    },
+    {
+        "height": 150,
+        "previous_hash": "18f4ac1d1cfcac1c1bc6f6a0886270f6ab772bfafaa432f1bb54bcf5cc737789f7ad85c4ac73671130253cfe85857c2051d6c6d9eb5f3700ecd41cf9e17b305e",
+        "hash": "5008c8b0aaf53e6e876dc979678ddb2b9627ca0130402d2f2eab62ebc20cc059439eda9aaf7cd12831955179edd01a6182ed5fbae8f394c3425ab3d87a76870c",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "GEM",
+        "timestamp": "2026-09-22T19:55:38.387784"
+    },
+    {
+        "height": 151,
+        "previous_hash": "5008c8b0aaf53e6e876dc979678ddb2b9627ca0130402d2f2eab62ebc20cc059439eda9aaf7cd12831955179edd01a6182ed5fbae8f394c3425ab3d87a76870c",
+        "hash": "c1a60768226b4ae5f028f2e7f1475dc4d31aab05869060afe4bdee210e5549fc613dd22fc1594d1bb7a6c733e059939e2596923175f350edc956f390e1811a40",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "KEY",
+        "timestamp": "2026-09-22T19:55:38.459379"
+    },
+    {
+        "height": 152,
+        "previous_hash": "c1a60768226b4ae5f028f2e7f1475dc4d31aab05869060afe4bdee210e5549fc613dd22fc1594d1bb7a6c733e059939e2596923175f350edc956f390e1811a40",
+        "hash": "d0bbdefdd0344bec509776f08bf66c835c55a05a28e7d985727770b0c383f4ac9eadb05a22008c7f395f8c6815420bd53c4e78bd31c4bbe998018adfcabac915",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "GOLD",
+        "timestamp": "2026-09-22T19:55:41.403320"
+    },
+    {
+        "height": 153,
+        "previous_hash": "d0bbdefdd0344bec509776f08bf66c835c55a05a28e7d985727770b0c383f4ac9eadb05a22008c7f395f8c6815420bd53c4e78bd31c4bbe998018adfcabac915",
+        "hash": "55349ccf0f794d45e9aedb255b34a42a21df7d5b4be706ea7521eeb8f0950c1145398b2f9e85bf3a4c96fe91d4df336be38379233bf9a3fd315ba68f08ed7a87",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "GEM",
+        "timestamp": "2026-09-22T19:55:41.438050"
+    },
+    {
+        "height": 154,
+        "previous_hash": "55349ccf0f794d45e9aedb255b34a42a21df7d5b4be706ea7521eeb8f0950c1145398b2f9e85bf3a4c96fe91d4df336be38379233bf9a3fd315ba68f08ed7a87",
+        "hash": "1d2250e8c28f1cf9d780b1918b9997a37c067424e0a84a92a48a1fef511eeefbfd5f48dfa5919fb323763574cde47e5fe7edaa6aa33c2d2f30cf6c7ccadd617f",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "KEY",
+        "timestamp": "2026-09-22T19:55:41.499248"
+    },
+    {
+        "height": 155,
+        "previous_hash": "1d2250e8c28f1cf9d780b1918b9997a37c067424e0a84a92a48a1fef511eeefbfd5f48dfa5919fb323763574cde47e5fe7edaa6aa33c2d2f30cf6c7ccadd617f",
+        "hash": "b7c23a6b8665c96ee863ea36142b9f217fcbfb167870bda3c5e4c4a1a045c925ee94a08300e84048217a118a813657d5b344ed6b1412d42b008780920cf0d35f",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "GOLD",
+        "timestamp": "2026-09-22T19:55:44.441948"
+    },
+    {
+        "height": 156,
+        "previous_hash": "b7c23a6b8665c96ee863ea36142b9f217fcbfb167870bda3c5e4c4a1a045c925ee94a08300e84048217a118a813657d5b344ed6b1412d42b008780920cf0d35f",
+        "hash": "15b4a11e21935d2587ed8e58ba6e3202a2db39ba4ba1049f397ad17a69d79526906e9754f987233063f5479189f8bf9ba4785bc7f7d6cbff6969093ae26b21b1",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "GEM",
+        "timestamp": "2026-09-22T19:55:44.469054"
+    },
+    {
+        "height": 157,
+        "previous_hash": "15b4a11e21935d2587ed8e58ba6e3202a2db39ba4ba1049f397ad17a69d79526906e9754f987233063f5479189f8bf9ba4785bc7f7d6cbff6969093ae26b21b1",
+        "hash": "2202019e69c159ffe16344a4750c589b6098c2aa469c484a680c89e76525a340d35e120a6084da6846cc17476114ba32e395b283300a845455d5c404e25b5c98",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "KEY",
+        "timestamp": "2026-09-22T19:55:44.525289"
+    },
+    {
+        "height": 158,
+        "previous_hash": "2202019e69c159ffe16344a4750c589b6098c2aa469c484a680c89e76525a340d35e120a6084da6846cc17476114ba32e395b283300a845455d5c404e25b5c98",
+        "hash": "6f9d7189e9d00316c73399e0b5ec2dcf0613efadebd389e8c8a37e5102c2ceb33e4cc65a2dba394b5735479660f0120eecb27630177fdb93a5ed19d96026436d",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "GOLD",
+        "timestamp": "2026-09-22T19:55:47.491878"
+    },
+    {
+        "height": 159,
+        "previous_hash": "6f9d7189e9d00316c73399e0b5ec2dcf0613efadebd389e8c8a37e5102c2ceb33e4cc65a2dba394b5735479660f0120eecb27630177fdb93a5ed19d96026436d",
+        "hash": "c1af5d39a31215e72dc6833778a5a35f6db8d482f0d155e63abf10309cc8eef5598148b77f3aed8fd0ba5088ba5df3ae645dabf3a4e0c6dd1bf9d3693f872657",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "GEM",
+        "timestamp": "2026-09-22T19:55:47.514098"
+    },
+    {
+        "height": 160,
+        "previous_hash": "c1af5d39a31215e72dc6833778a5a35f6db8d482f0d155e63abf10309cc8eef5598148b77f3aed8fd0ba5088ba5df3ae645dabf3a4e0c6dd1bf9d3693f872657",
+        "hash": "bd9300f6fb28f95a48067e68bb057f38fa221ef2ae3b49c67111b0cf343017c69f87f35083968fa9a8df9e85e17f54c54585c053164755ddede139d8ca8337e2",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "KEY",
+        "timestamp": "2026-09-22T19:55:47.552461"
+    },
+    {
+        "height": 161,
+        "previous_hash": "bd9300f6fb28f95a48067e68bb057f38fa221ef2ae3b49c67111b0cf343017c69f87f35083968fa9a8df9e85e17f54c54585c053164755ddede139d8ca8337e2",
+        "hash": "0b0c81c45c041b8d634fa7cce72a9cca9c3b88c4379c92e34b5e0e0bcaa6f26a9b1035f82a60775e5707476cddf6ff1b1008d085435c32f6df757025863553ed",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "GOLD",
+        "timestamp": "2026-09-22T19:55:50.531757"
+    },
+    {
+        "height": 162,
+        "previous_hash": "0b0c81c45c041b8d634fa7cce72a9cca9c3b88c4379c92e34b5e0e0bcaa6f26a9b1035f82a60775e5707476cddf6ff1b1008d085435c32f6df757025863553ed",
+        "hash": "b60e0133599835915f5c0598359feb2c237a7bb08647299b2395fd23074b4023d39fda033bdeb319460c76d8da76e94ae27b7e39f6049ee6956cc3a041a3778b",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "GEM",
+        "timestamp": "2026-09-22T19:55:50.553316"
+    },
+    {
+        "height": 163,
+        "previous_hash": "b60e0133599835915f5c0598359feb2c237a7bb08647299b2395fd23074b4023d39fda033bdeb319460c76d8da76e94ae27b7e39f6049ee6956cc3a041a3778b",
+        "hash": "47179f2cd21fc50a0017b4e71df0ae8cbcefb40075466c1b9354dde37f15361408f43656410e6f1320f9a631bb52da6e8d5d309407a7ad258cba428daba64f1e",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "KEY",
+        "timestamp": "2026-09-22T19:55:50.577631"
+    },
+    {
+        "height": 164,
+        "previous_hash": "47179f2cd21fc50a0017b4e71df0ae8cbcefb40075466c1b9354dde37f15361408f43656410e6f1320f9a631bb52da6e8d5d309407a7ad258cba428daba64f1e",
+        "hash": "7d1de904c38ed3dc8dc57ea00f9db4dbb1dc3c8e461b4e7072b6158ac88756cd93103bf87ccd4c81c77f8813adbe7888d092d447841c83f458936090d473d342",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "GOLD",
+        "timestamp": "2026-09-22T19:55:53.560027"
+    },
+    {
+        "height": 165,
+        "previous_hash": "7d1de904c38ed3dc8dc57ea00f9db4dbb1dc3c8e461b4e7072b6158ac88756cd93103bf87ccd4c81c77f8813adbe7888d092d447841c83f458936090d473d342",
+        "hash": "74ddba3102fbc0a38568ce6c7f3f89b78b4fa060726b14db376561b8c5500a9298fe511e72574bfb4a5e5fcb95a4213e5787c82ee1b22ad0c18a16643ec10a3e",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "GEM",
+        "timestamp": "2026-09-22T19:55:53.583695"
+    },
+    {
+        "height": 166,
+        "previous_hash": "74ddba3102fbc0a38568ce6c7f3f89b78b4fa060726b14db376561b8c5500a9298fe511e72574bfb4a5e5fcb95a4213e5787c82ee1b22ad0c18a16643ec10a3e",
+        "hash": "345f27174661d1d0acd57d0d998b803ed338db62d8cbfa21c68fceb0e5d8cbf437651d28d1c872f79f0c5f6d0b2c45b3c7238427326f590ec3d9a436e5ce39b3",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "KEY",
+        "timestamp": "2026-09-22T19:55:53.604532"
+    },
+    {
+        "height": 167,
+        "previous_hash": "345f27174661d1d0acd57d0d998b803ed338db62d8cbfa21c68fceb0e5d8cbf437651d28d1c872f79f0c5f6d0b2c45b3c7238427326f590ec3d9a436e5ce39b3",
+        "hash": "bee887480cc96bd41d5575c984996441f56dfa3f5dfb205803192f5132131cc1dcbe59c25aff708d3a082e1e6d0fbdf003a5bddedfac83fedd610aaf150645ec",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "GOLD",
+        "timestamp": "2026-09-22T19:55:56.592287"
+    },
+    {
+        "height": 168,
+        "previous_hash": "bee887480cc96bd41d5575c984996441f56dfa3f5dfb205803192f5132131cc1dcbe59c25aff708d3a082e1e6d0fbdf003a5bddedfac83fedd610aaf150645ec",
+        "hash": "435e7bbabb2db049c01126c85508b4a57c88af5cf47b534f591e1cf34c338a919b2897d8ebf629cbac7833122797e08847507e97194eb40d35a3d6b7e175eeb8",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "GEM",
+        "timestamp": "2026-09-22T19:55:56.620550"
+    },
+    {
+        "height": 169,
+        "previous_hash": "435e7bbabb2db049c01126c85508b4a57c88af5cf47b534f591e1cf34c338a919b2897d8ebf629cbac7833122797e08847507e97194eb40d35a3d6b7e175eeb8",
+        "hash": "5f63ee9eef070fbdd3092638368f71f9079b7a151ff006620e7e42968cb9e6ec4825a1015da539a7fe20bcefbcd5e015b8b4d4034b6180f64ddb1f6eff66eda2",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "KEY",
+        "timestamp": "2026-09-22T19:55:56.636252"
+    },
+    {
+        "height": 170,
+        "previous_hash": "5f63ee9eef070fbdd3092638368f71f9079b7a151ff006620e7e42968cb9e6ec4825a1015da539a7fe20bcefbcd5e015b8b4d4034b6180f64ddb1f6eff66eda2",
+        "hash": "6f68e0300d1265a9ea07b85540ef3d4c6e899dca0b8bc03499592d1c1809d31533ec12bf798ad2d826a94228b689b5b707527d1f40de7e3bd7eac4ba4f97a265",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "GOLD",
+        "timestamp": "2026-09-22T19:55:59.637193"
+    },
+    {
+        "height": 171,
+        "previous_hash": "6f68e0300d1265a9ea07b85540ef3d4c6e899dca0b8bc03499592d1c1809d31533ec12bf798ad2d826a94228b689b5b707527d1f40de7e3bd7eac4ba4f97a265",
+        "hash": "c01ccb45c92afecc343c92b376ba810aad6bd125b6e2650311bc9f063fa3919a3914df54c69fa05857a3d7bf1566583d94ef29ffecec47dc0af84daf70ad63e2",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "KEY",
+        "timestamp": "2026-09-22T19:55:59.692962"
+    },
+    {
+        "height": 172,
+        "previous_hash": "c01ccb45c92afecc343c92b376ba810aad6bd125b6e2650311bc9f063fa3919a3914df54c69fa05857a3d7bf1566583d94ef29ffecec47dc0af84daf70ad63e2",
+        "hash": "379a7c1626421f0c244d7993b74b1d368b10e1f777a78243495275fca5fc41d9d163ae5712614803219994635a5312a3b48013c61431349218468fd66131918d",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "GEM",
+        "timestamp": "2026-09-22T19:55:59.707030"
+    },
+    {
+        "height": 173,
+        "previous_hash": "379a7c1626421f0c244d7993b74b1d368b10e1f777a78243495275fca5fc41d9d163ae5712614803219994635a5312a3b48013c61431349218468fd66131918d",
+        "hash": "1992313a5bf3547a29373039d832a53ca02e1ff377bd442766d1567f2b54ef84f57bbfdc94a83d022dffd0a5b54af67ccd31d2c8c977aad72af970fbac04499b",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "GOLD",
+        "timestamp": "2026-09-22T19:56:02.687063"
+    },
+    {
+        "height": 174,
+        "previous_hash": "1992313a5bf3547a29373039d832a53ca02e1ff377bd442766d1567f2b54ef84f57bbfdc94a83d022dffd0a5b54af67ccd31d2c8c977aad72af970fbac04499b",
+        "hash": "9cc216059ce0f3297159de2cd92b09e1a74487b1cc1ab3c2bc7cb4399578966d37db7066814c699206fc08b8c94c38acdc370b8626afe0ab4a8e3a4cfb96c6e2",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "KEY",
+        "timestamp": "2026-09-22T19:56:02.739453"
+    },
+    {
+        "height": 175,
+        "previous_hash": "9cc216059ce0f3297159de2cd92b09e1a74487b1cc1ab3c2bc7cb4399578966d37db7066814c699206fc08b8c94c38acdc370b8626afe0ab4a8e3a4cfb96c6e2",
+        "hash": "c712a69661fed25c486f44b86b68289c0c7f00169718272f9a55ed08adc0da993217886caf198516feb0851a9978ee951fe05b02c39636e3f0b7ac6a1b7fca3e",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "GEM",
+        "timestamp": "2026-09-22T19:56:02.760618"
+    },
+    {
+        "height": 176,
+        "previous_hash": "c712a69661fed25c486f44b86b68289c0c7f00169718272f9a55ed08adc0da993217886caf198516feb0851a9978ee951fe05b02c39636e3f0b7ac6a1b7fca3e",
+        "hash": "f8706cb27547ce54332953472c9c229f87eaad20c76ccef2931f1b37948167c3fb62c1f5785b69067ace0d3c598fa10e8dbf9be3a8c3ac7f8e54ff3849e9445d",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "GOLD",
+        "timestamp": "2026-09-22T19:56:05.718097"
+    },
+    {
+        "height": 177,
+        "previous_hash": "f8706cb27547ce54332953472c9c229f87eaad20c76ccef2931f1b37948167c3fb62c1f5785b69067ace0d3c598fa10e8dbf9be3a8c3ac7f8e54ff3849e9445d",
+        "hash": "8f0548c849a482aa97790ae6998aede222166b486bbe3090d810cba982e9744b05ff71bdb47ccda593a6673a9c06da081be5e5b5c4414cfa7a1a6ffedd3a0d1e",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "KEY",
+        "timestamp": "2026-09-22T19:56:05.774105"
+    },
+    {
+        "height": 178,
+        "previous_hash": "8f0548c849a482aa97790ae6998aede222166b486bbe3090d810cba982e9744b05ff71bdb47ccda593a6673a9c06da081be5e5b5c4414cfa7a1a6ffedd3a0d1e",
+        "hash": "5c38d87b5b36001f9024edaa88b31a778a1d2fe2242f7eb53fa6677e633ab7063e903a5c7811358f3a1ca9bec7dc83b14628439e25398ef78472ebfd404b5cab",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "GEM",
+        "timestamp": "2026-09-22T19:56:05.809381"
+    },
+    {
+        "height": 179,
+        "previous_hash": "5c38d87b5b36001f9024edaa88b31a778a1d2fe2242f7eb53fa6677e633ab7063e903a5c7811358f3a1ca9bec7dc83b14628439e25398ef78472ebfd404b5cab",
+        "hash": "272c3d68aa84cd8da1ea2bfa922a34b852623cdcc12124db0273ae4ec6fb8a8ebd2af25b9db9ecaf85f5c8cb25c37073d71e4e1fa827f637b79d2bd32b153d74",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "GOLD",
+        "timestamp": "2026-09-22T19:56:08.767522"
+    },
+    {
+        "height": 180,
+        "previous_hash": "272c3d68aa84cd8da1ea2bfa922a34b852623cdcc12124db0273ae4ec6fb8a8ebd2af25b9db9ecaf85f5c8cb25c37073d71e4e1fa827f637b79d2bd32b153d74",
+        "hash": "9ac4355f93d9118921259d9de1278d9b0b72fcca864fed300b6f768e17c7a933cb11948c0c1d6cf9b90f23980ba3cf4e674d2f7eefe73370a12f8ef4e1b4ccc0",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "KEY",
+        "timestamp": "2026-09-22T19:56:08.811785"
+    },
+    {
+        "height": 181,
+        "previous_hash": "9ac4355f93d9118921259d9de1278d9b0b72fcca864fed300b6f768e17c7a933cb11948c0c1d6cf9b90f23980ba3cf4e674d2f7eefe73370a12f8ef4e1b4ccc0",
+        "hash": "40e283976ec839dd31c936c65127ef791772f1d34b9906ff19d2c43ce9a995330d126c0f7684d338c87cc873118c1671b0d5278894584286a38ca4869e50702c",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "GEM",
+        "timestamp": "2026-09-22T19:56:08.836488"
+    },
+    {
+        "height": 182,
+        "previous_hash": "40e283976ec839dd31c936c65127ef791772f1d34b9906ff19d2c43ce9a995330d126c0f7684d338c87cc873118c1671b0d5278894584286a38ca4869e50702c",
+        "hash": "b61a437137b673509875cbef36978c6771edaf613200c5e28ea73b3cb2e0b44a1f312f713e2c403520b36e3bf0b8f781513e0de7b4f572f71e06c0bff733c6d2",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "GOLD",
+        "timestamp": "2026-09-22T19:56:11.818161"
+    },
+    {
+        "height": 183,
+        "previous_hash": "b61a437137b673509875cbef36978c6771edaf613200c5e28ea73b3cb2e0b44a1f312f713e2c403520b36e3bf0b8f781513e0de7b4f572f71e06c0bff733c6d2",
+        "hash": "960506c0055af3c0a785ab0095a348175a7261cc46990f7d6704143abb9453804f936a9b53b9d419d009ed9fa594b4f440aa4c38373278084203e855188a8705",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "KEY",
+        "timestamp": "2026-09-22T19:56:11.855229"
+    },
+    {
+        "height": 184,
+        "previous_hash": "960506c0055af3c0a785ab0095a348175a7261cc46990f7d6704143abb9453804f936a9b53b9d419d009ed9fa594b4f440aa4c38373278084203e855188a8705",
+        "hash": "eeec29863c2e347f583c8b046b635c7b25960dfc466112390f9db7dede5bc0859b885bd0ed00405e3caf0b1c254b5c5ab0c6edbffb83301ecafc05614850c619",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "GEM",
+        "timestamp": "2026-09-22T19:56:11.876778"
+    },
+    {
+        "height": 185,
+        "previous_hash": "eeec29863c2e347f583c8b046b635c7b25960dfc466112390f9db7dede5bc0859b885bd0ed00405e3caf0b1c254b5c5ab0c6edbffb83301ecafc05614850c619",
+        "hash": "c0e2c1a4b1a6f528e505a4f7bb829ce2ed336b1485c23d8f3abec6bdc44810f53c2d9dbb84a7f26ae45b2ff54e0a6dcfd7ecaa0fa588f0fd6f1746234a0872cd",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "GOLD",
+        "timestamp": "2026-09-22T19:56:14.861605"
+    },
+    {
+        "height": 186,
+        "previous_hash": "c0e2c1a4b1a6f528e505a4f7bb829ce2ed336b1485c23d8f3abec6bdc44810f53c2d9dbb84a7f26ae45b2ff54e0a6dcfd7ecaa0fa588f0fd6f1746234a0872cd",
+        "hash": "3d11077f9f53ae72b93b4a5843d85a6064d326f14574813e599bfbfb9be6ad920efafb8ab8c2cec62dbeffd24628b09c97e09276362ef0c9ee3f75c56c43cc46",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "KEY",
+        "timestamp": "2026-09-22T19:56:14.892230"
+    },
+    {
+        "height": 187,
+        "previous_hash": "3d11077f9f53ae72b93b4a5843d85a6064d326f14574813e599bfbfb9be6ad920efafb8ab8c2cec62dbeffd24628b09c97e09276362ef0c9ee3f75c56c43cc46",
+        "hash": "c8e6750a74d722a7fcd6fcf47366fa7ad7da6d76c0a0ac733a763a7611be0b760d7afe904b0106e920d3fdb4ad938e4d4e5260f841667402baa0be87b0d0594e",
+        "validator": "COFC_VALIDATOR_1",
+        "asset_type": "GEM",
+        "timestamp": "2026-09-22T19:56:14.925738"
     }
 ]
