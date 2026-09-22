@@ -6,13 +6,16 @@ import os
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from core.ledger import SovereignLedger
+from core.wallet_gateway import SovereignWalletManager
 
 ledger = SovereignLedger()
+wallet_mgr = SovereignWalletManager()
 
 class EnterpriseSovereignHandler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
         parsed_path = urllib.parse.urlparse(self.path)
         path = parsed_path.path
+        query_params = urllib.parse.parse_qs(parsed_path.query)
 
         self.send_response(200)
         self.send_header("Content-Type", "application/json")
@@ -29,6 +32,12 @@ class EnterpriseSovereignHandler(http.server.BaseHTTPRequestHandler):
                 "assets": state,
                 "status": "SECURE_OPERATIONAL"
             }
+            self.wfile.write(json.dumps(response, indent=2).encode())
+        elif "/api/v1/wallet/balance" in path:
+            address = query_params.get("address", ["COFC_VALIDATOR_1"])[0]
+            asset = query_params.get("asset", ["GOLD"])[0]
+            balance = wallet_mgr.get_balance(address, asset)
+            response = {"address": address, "asset": asset, "balance": balance}
             self.wfile.write(json.dumps(response, indent=2).encode())
         elif "/api/v1/consensus/next_proposer" in path:
             latest = ledger.get_latest_block()
@@ -69,6 +78,14 @@ class EnterpriseSovereignHandler(http.server.BaseHTTPRequestHandler):
                 "height": new_height
             }
             self.wfile.write(json.dumps(response).encode())
+        elif "/api/v1/wallet/transfer" in self.path:
+            sender = data.get("sender", "COFC_VALIDATOR_1")
+            recipient = data.get("recipient", "TREASURY_ROOT")
+            asset_type = data.get("asset_type", "GOLD")
+            amount = float(data.get("amount", 0.0))
+
+            res = wallet_mgr.transfer_asset(sender, recipient, asset_type, amount)
+            self.wfile.write(json.dumps(res).encode())
         elif "/api/v1/miner/register" in self.path:
             self.wfile.write(json.dumps({"status": "registered", "gateway": "active"}).encode())
         else:
@@ -79,5 +96,5 @@ class EnterpriseSovereignHandler(http.server.BaseHTTPRequestHandler):
 
 if __name__ == "__main__":
     server = http.server.HTTPServer(("127.0.0.1", 8545), EnterpriseSovereignHandler)
-    print("[+] Enterprise Sovereign Node v2.0 running on http://127.0.0.1:8545...")
+    print("[+] Enterprise Sovereign Node v2.1 with Wallet Gateway running on http://127.0.0.1:8545...")
     server.serve_forever()
