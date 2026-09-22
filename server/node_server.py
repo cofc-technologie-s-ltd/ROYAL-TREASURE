@@ -1,5 +1,6 @@
 import http.server
 import socketserver
+import socket
 import json
 from urllib.parse import urlparse, parse_qs
 from core.ledger import SovereignLedger
@@ -15,6 +16,9 @@ guard = COFCGuardEngine()
 
 class ReusableTCPServer(socketserver.TCPServer):
     allow_reuse_address = True
+    def server_bind(self):
+        self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        super().server_bind()
 
 class SovereignNodeHandler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
