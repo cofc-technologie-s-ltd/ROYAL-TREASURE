@@ -12,8 +12,8 @@ if __name__ == "__main__":
     while True:
         try:
             decision = engine.evaluate_and_optimize_liquidity()
-            print(f"[L0-MIND] Action: {decision.get('action_taken')} | Gold: {decision.get('gold_balance')} | Key: {decision.get('key_balance')}")
-            time.sleep(15) # מרווח מחזורי החלטות אוטונומיות
+            print(f"[L0-MIND] Action: {decision.get('action_taken')} | Gold: {decision.get('gold_balance')} | Key: {decision.get('key_balance')} | Gem: {decision.get('gem_balance')}")
+            time.sleep(15)
         except Exception as e:
             print(f"[-] Absolute Mind loop error: {e}")
             time.sleep(5)

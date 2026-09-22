@@ -13,17 +13,18 @@ class AbsoluteMindEngine:
         """מנתח את יתרות הנזילות בספר הראשי ומקבל החלטות ניהול ואיזון עצמאיות."""
         gold_bal = self.wallet_mgr.get_balance(self.node_address, "GOLD")
         key_bal = self.wallet_mgr.get_balance(self.node_address, "KEY")
+        gem_bal = self.wallet_mgr.get_balance(self.node_address, "GEM")
         
         decision_log = {
             "timestamp": time.time(),
             "agent": "L0-ABSOLUTE_MIND",
             "gold_balance": gold_bal,
             "key_balance": key_bal,
+            "gem_balance": gem_bal,
             "action_taken": "NONE",
             "reason": "Liquidity parameters are within optimal equilibrium."
         }
         
-        # לוגיקת החלטה אוטונומית: ניהול עודפים וניתוב נזילות
         if gold_bal > 100.0:
             res = self.cash_engine.submit_zero_fee_transfer(
                 sender=self.node_address,
@@ -33,6 +34,5 @@ class AbsoluteMindEngine:
             )
             decision_log["action_taken"] = "REBALANCE_GOLD_SURPLUS"
             decision_log["result"] = res
-            decision_log["reason"] = "Gold reserve threshold exceeded; rebalancing to treasury root."
             
         return decision_log
