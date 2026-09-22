@@ -1,0 +1,15 @@
+{
+    "GOLD": {
+        "circulating": 69000000,
+        "mined": 47
+    },
+    "KEY": {
+        "circulating": 1000000,
+        "staked": 450000,
+        "mined": 35
+    },
+    "GEM": {
+        "circulating": 500000000,
+        "locked": 120000000
+    }
+}

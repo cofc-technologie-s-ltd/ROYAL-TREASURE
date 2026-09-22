@@ -120,3 +120,7 @@ if __name__ == "__main__":
     server = http.server.HTTPServer(("127.0.0.1", 8545), EnterpriseSovereignHandler)
     print("[+] Enterprise Sovereign Node v2.3 with COFC GUARD running on http://127.0.0.1:8545...")
     server.serve_forever()
+
+# --- CASH Protocol Endpoint Extension ---
+from core.cash_protocol import CASHProtocolEngine
+cash_engine = CASHProtocolEngine()
