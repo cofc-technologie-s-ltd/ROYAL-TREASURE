@@ -30,9 +30,14 @@ class SovereignLedger:
     def get_balance(self, address, asset_type):
         if address not in self.balances:
             self.balances[address] = {}
-        return self.balances[address].get(asset_type, 1000.0)  # ברירת מחדל התחלתית למנועים אם אין יתרה רשומה
+        val = self.balances[address].get(asset_type, 1000.0)
+        try:
+            return float(val)
+        except (ValueError, TypeError):
+            return 1000.0
 
     def record_transaction(self, sender, recipient, amount, asset_type, tx_id):
+        amount = float(amount)
         if sender != "TREASURY_ROOT":
             sender_bal = self.get_balance(sender, asset_type)
             if sender_bal < amount:
@@ -42,7 +47,7 @@ class SovereignLedger:
         if recipient not in self.balances:
             self.balances[recipient] = {}
         
-        rec_bal = self.balances[recipient].get(asset_type, 0.0)
+        rec_bal = self.get_balance(recipient, asset_type)
         self.balances[recipient][asset_type] = rec_bal + amount
 
         tx = {
