@@ -1,46 +1,26 @@
-import json
-import time
-import hashlib
+import re
 
 class ISOGateway:
-    def __init__(self):
-        self.version = "ISO20022_V2026"
-        self.corridors = ["SWIFT_FIN_PLUS", "TARGET2", "COFC_QUANTUM_CLEARING"]
+    """
+    Validates financial messages against ISO 20022 standard (pacs.008 format).
+    Ensures BIC compliance, ISO 4217 currency standards, and strict structural checks.
+    """
+    @staticmethod
+    def validate_pacs008(data: dict) -> tuple[bool, str]:
+        bic = data.get("bic", "")
+        currency = data.get("currency", "")
+        amount = data.get("amount", 0.0)
 
-    def generate_pacs_008_message(self, sender_bic, receiver_bic, amount, currency, reference_id):
-        msg = {
-            "AppHdr": {
-                "Fr": {"FIId": {"FinInstnId": {"BICFI": sender_bic}}},
-                "To": {"FIId": {"FinInstnId": {"BICFI": receiver_bic}}},
-                "BizMsgIdr": reference_id,
-                "MsgDefIdr": "pacs.008.001.10",
-                "CreDtTm": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
-            },
-            "Document": {
-                "FIToFICstmrCdtTrf": {
-                    "GrpHdr": {
-                        "MsgId": reference_id,
-                        "CreDt": time.strftime("%Y-%m-%d", time.gmtime()),
-                        "NbOfTxs": "1"
-                    },
-                    "CdtTrfTxInf": {
-                        "PmtId": {"EndToEndId": f"E2E-{reference_id}"},
-                        "IntrBkSttlmAmt": {"Ccy": currency, "value": float(amount)},
-                        "CdtrAgt": {"FinInstnId": {"BICFI": receiver_bic}}
-                    }
-                }
-            }
-        }
-        return msg
+        # בדיקת תקינות קוד BIC (בין 8 ל-11 תווים אלפא-נומריים)
+        bic_pattern = r"^[A-Z]{4}[A-Z]{2}[A-Z0-9]{2}([A-Z0-9]{3})?$"
+        if not re.match(bic_pattern, bic):
+            return False, f"Invalid BIC format: {bic}"
 
-    def validate_and_route(self, iso_payload, corridor="COFC_QUANTUM_CLEARING"):
-        if corridor not in self.corridors:
-            return {"status": "REJECTED", "reason": "Invalid financial corridor"}
-        
-        settlement_hash = hashlib.sha3_512(json.dumps(iso_payload, sort_keys=True).encode()).hexdigest()
-        return {
-            "status": "SETTLED_ISO_COMPLIANT",
-            "corridor": corridor,
-            "settlement_hash": settlement_hash,
-            "timestamp": time.time()
-        }
+        # בדיקת תקינות קוד מטבע (ISO 4217 - בדיוק 3 אותיות באנגלית רישיות)
+        if not re.match(r"^[A-Z]{3}$", currency):
+            return False, f"Invalid currency code format: {currency}"
+
+        if amount <= 0:
+            return False, "Transfer amount must be strictly positive."
+
+        return True, "ISO 20022 validation passed successfully."
