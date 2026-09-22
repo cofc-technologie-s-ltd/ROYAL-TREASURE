@@ -7,12 +7,14 @@ from core.ledger import SovereignLedger
 from core.wallet_gateway import SovereignWalletManager
 from core.iso_gateway import ISOGateway
 from core.cofc_guard import COFCGuardEngine
+from core.viral_reward_engine import ViralRewardEngine
 
 PORT = 8545
 ledger = SovereignLedger()
 wallet_mgr = SovereignWalletManager()
 iso_gateway = ISOGateway()
 guard = COFCGuardEngine()
+viral_engine = ViralRewardEngine()
 
 class ReusableTCPServer(socketserver.TCPServer):
     allow_reuse_address = True
@@ -36,7 +38,7 @@ class SovereignNodeHandler(http.server.BaseHTTPRequestHandler):
             response_data = {
                 "node": "Enterprise Sovereign Node v2.3",
                 "status": "OPERATIONAL",
-                "protocols": ["CASH", "ISO20022", "COFC_GUARD"],
+                "protocols": ["CASH", "ISO20022", "COFC_GUARD", "VIRAL_REWARD"],
                 "active_assets": ["GOLD", "KEY", "GEM"]
             }
         elif path.startswith("/api/v1/wallet/"):
@@ -57,6 +59,10 @@ class SovereignNodeHandler(http.server.BaseHTTPRequestHandler):
             response_data = {
                 "shields_active": guard.active_shields,
                 "isolated_threats_count": len(guard.threat_registry)
+            }
+        elif path == "/api/v1/viral/leaderboard":
+            response_data = {
+                "leaderboard": viral_engine.get_leaderboard()
             }
         else:
             self.send_response(404)
@@ -112,6 +118,12 @@ class SovereignNodeHandler(http.server.BaseHTTPRequestHandler):
                 "iso_message": pacs_msg,
                 "settlement_result": settlement
             }
+
+        elif path == "/api/v1/viral/register":
+            github_handle = data.get("github_handle", "anonymous_dev")
+            referrer = data.get("referrer", None)
+            response_data = viral_engine.register_developer_node(github_handle, referrer)
+
         else:
             response_data = {"error": "Invalid POST endpoint"}
 
@@ -119,7 +131,7 @@ class SovereignNodeHandler(http.server.BaseHTTPRequestHandler):
 
 def run_server():
     server = ReusableTCPServer(("127.0.0.1", PORT), SovereignNodeHandler)
-    print(f"[+] Enterprise Sovereign Node v2.3 with ISO 20022 & COFC Guard running on http://127.0.0.1:{PORT}...")
+    print(f"[+] Enterprise Sovereign Node v2.3 with Viral Rewards & COFC Guard running on http://127.0.0.1:{PORT}...")
     server.serve_forever()
 
 if __name__ == "__main__":
