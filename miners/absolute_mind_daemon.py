@@ -6,7 +6,6 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from core.absolute_mind import AbsoluteMindEngine
 
 if __name__ == "__main__":
-    import time  # ייבוא כפול לוודא תקינות מלאה
     print("=== L₀-ABSOLUTE_MIND AUTONOMOUS REASONING ENGINE INITIALIZED ===")
     engine = AbsoluteMindEngine()
     
