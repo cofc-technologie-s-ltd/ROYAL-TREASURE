@@ -33,5 +33,13 @@ class COFCGuardEngine:
             "status": "VERIFIED_POST_QUANTUM"
         }
 
+    def verify_transaction_shield(self, transaction_data):
+        is_safe, msg = self.inspect_payload(str(transaction_data))
+        return {
+            "verified": is_safe,
+            "shield_status": msg,
+            "quantum_proof": self.generate_quantum_proof(transaction_data)
+        }
+
 # Alias for compatibility across modules
 COFCGuardShield = COFCGuardEngine

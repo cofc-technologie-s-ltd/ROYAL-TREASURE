@@ -13,6 +13,9 @@ wallet_mgr = SovereignWalletManager()
 iso_gateway = ISOGateway()
 guard = COFCGuardEngine()
 
+class ReusableTCPServer(socketserver.TCPServer):
+    allow_reuse_address = True
+
 class SovereignNodeHandler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
         parsed_path = urlparse(self.path)
@@ -44,7 +47,7 @@ class SovereignNodeHandler(http.server.BaseHTTPRequestHandler):
         elif path == "/api/v1/transactions":
             response_data = {
                 "total_transactions": len(ledger.transactions),
-                "transactions": ledger.transactions[-20:]  # Last 20
+                "transactions": ledger.transactions[-20:]
             }
         elif path == "/api/v1/guard/status":
             response_data = {
@@ -64,7 +67,6 @@ class SovereignNodeHandler(http.server.BaseHTTPRequestHandler):
         content_length = int(self.headers.get('Content-Length', 0))
         post_data = self.rfile.read(content_length).decode('utf-8')
 
-        # Guard Inspection
         is_safe, guard_msg = guard.inspect_payload(post_data)
         if not is_safe:
             self.send_response(403)
@@ -112,7 +114,7 @@ class SovereignNodeHandler(http.server.BaseHTTPRequestHandler):
         self.wfile.write(json.dumps(response_data, indent=4).encode())
 
 def run_server():
-    server = socketserver.TCPServer(("127.0.0.1", PORT), SovereignNodeHandler)
+    server = ReusableTCPServer(("127.0.0.1", PORT), SovereignNodeHandler)
     print(f"[+] Enterprise Sovereign Node v2.3 with ISO 20022 & COFC Guard running on http://127.0.0.1:{PORT}...")
     server.serve_forever()
 
