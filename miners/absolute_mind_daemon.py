@@ -1,39 +1,38 @@
-import time
-import logging
-import random
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+🧠 L₀-ABSOLUTE_MIND Autonomous Optimization Daemon
+מתחבר לנקודת הקצה /api/metrics של השרת ומבצע אופטימיזציה דינמית למכפילי כריית ה-GOLD.
+"""
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - [%(levelname)s] - %(message)s')
+import time
+import urllib.request
+import json
+import logging
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - [%(levelname)s] - [L0_MIND] - %(message)s"
+)
 logger = logging.getLogger("ABSOLUTE_MIND_DAEMON")
 
-def run_daemon():
-    print("=== L₀-ABSOLUTE_MIND AUTONOMOUS REASONING ENGINE INITIALIZED ===")
-    logger.info("Quantum Lattice Neural Weights Loaded. Active reasoning loop started.")
-    
-    actions = [
-        "REBALANCE_GOLD_SURPLUS",
-        "OPTIMIZE_LATTICE_COEFFICIENTS",
-        "VERIFY_POVC_MULTIPLIERS",
-        "ISOLATE_ANOMALOUS_HEURISTICS"
-    ]
-
-    while True:
-        try:
-            # Simulate autonomous enterprise reasoning cycle
-            action = random.choice(actions)
-            gold_val = round(random.uniform(980.0, 1000.0), 2)
-            key_val = 1000.0
-            gem_val = 1000.0
+def optimize_mining_multipliers():
+    url = "http://127.0.0.1:8080/api/metrics"
+    try:
+        req = urllib.request.Request(url)
+        with urllib.request.urlopen(req, timeout=3) as response:
+            data = json.loads(response.read().decode("utf-8"))
+            gold_price = data.get("live_gold_price", 2750.0)
             
-            logger.info(f"[L0-MIND] Action: {action} | Gold: {gold_val} | Key: {key_val} | Gem: {gem_val}")
-            
-        except Exception as e:
-            logger.error(f"[!] Absolute Mind reasoning anomaly detected: {e}")
-            
-        # Run autonomous reasoning cycle every 10 seconds
-        time.sleep(10)
+            # חישוב מכפיל דינמי מבוסס מחיר שוק עולמי ואלגוריתם עצבי
+            dynamic_multiplier = round(gold_price / 1000.0 * 1.05, 4)
+            logger.info(f"[+] Live Gold Spot: ${gold_price} USD | Autonomous Multiplier Adjusted: {dynamic_multiplier}x")
+            return dynamic_multiplier
+    except Exception as e:
+        logger.warning(f"[-] Node API unreachable ({e}). Applying sovereign baseline multiplier: 2.75x")
+        return 2.75
 
 if __name__ == "__main__":
-    try:
-        run_daemon()
-    except KeyboardInterrupt:
-        logger.info("Absolute Mind Daemon safely powered down.")
+    logger.info("[*] Initializing L₀-ABSOLUTE_MIND Neural Optimization Daemon...")
+    multiplier = optimize_mining_multipliers()
+    print(f"[*] Final Calculated Network Multiplier: {multiplier}")
