@@ -1,44 +1,46 @@
 import json
-import uuid
-from datetime import datetime
+import time
+import hashlib
 
-class ISO20022SovereignGateway:
+class ISOGateway:
     def __init__(self):
-        pass
+        self.version = "ISO20022_V2026"
+        self.corridors = ["SWIFT_FIN_PLUS", "TARGET2", "COFC_QUANTUM_CLEARING"]
 
-    def generate_pacs008_settlement(self, sender, recipient, asset_type, amount):
-        """מייצר הודעת סליקה מוסדית בתקן ISO 20022 (pacs.008.001.08) המותאמת לנכסי RPoS."""
-        msg_id = f"COFC-ISO-{uuid.uuid4().hex[:12].upper()}"
-        settlement_data = {
+    def generate_pacs_008_message(self, sender_bic, receiver_bic, amount, currency, reference_id):
+        msg = {
             "AppHdr": {
-                "Fr": {"FIId": {"FinInstnId": {"BICFI": "COFCSVL1XXX"}}},
-                "To": {"FIId": {"FinInstnId": {"BICFI": "SOVRTREASXXX"}}},
-                "BizMsgIdr": msg_id,
-                "MsgDefIdr": "pacs.008.001.08",
-                "CreDtTm": datetime.utcnow().isoformat()
+                "Fr": {"FIId": {"FinInstnId": {"BICFI": sender_bic}}},
+                "To": {"FIId": {"FinInstnId": {"BICFI": receiver_bic}}},
+                "BizMsgIdr": reference_id,
+                "MsgDefIdr": "pacs.008.001.10",
+                "CreDtTm": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
             },
             "Document": {
                 "FIToFICstmrCdtTrf": {
                     "GrpHdr": {
-                        "MsgId": msg_id,
-                        "CreDtTm": datetime.utcnow().isoformat(),
-                        "NbOfTxs": "1",
-                        "SttlmInf": {
-                            "SttlmMtd": "CLRG",
-                            "ClrSys": {"Prtry": "ROYAL_RPoS_SHA3"}
-                        }
+                        "MsgId": reference_id,
+                        "CreDt": time.strftime("%Y-%m-%d", time.gmtime()),
+                        "NbOfTxs": "1"
                     },
                     "CdtTrfTxInf": {
-                        "PmtId": {"EndToEndId": f"E2E-{msg_id}"},
-                        "IntrBkSttlmAmt": {
-                            "Ccy": asset_type,
-                            "Amt": f"{amount:.4f}"
-                        },
-                        "Dbtr": {"Nm": sender},
-                        "Cdtr": {"Nm": recipient},
-                        "Purp": {"Prtry": "SOVEREIGN_ASSET_SETTLEMENT"}
+                        "PmtId": {"EndToEndId": f"E2E-{reference_id}"},
+                        "IntrBkSttlmAmt": {"Ccy": currency, "value": float(amount)},
+                        "CdtrAgt": {"FinInstnId": {"BICFI": receiver_bic}}
                     }
                 }
             }
         }
-        return settlement_data
+        return msg
+
+    def validate_and_route(self, iso_payload, corridor="COFC_QUANTUM_CLEARING"):
+        if corridor not in self.corridors:
+            return {"status": "REJECTED", "reason": "Invalid financial corridor"}
+        
+        settlement_hash = hashlib.sha3_512(json.dumps(iso_payload, sort_keys=True).encode()).hexdigest()
+        return {
+            "status": "SETTLED_ISO_COMPLIANT",
+            "corridor": corridor,
+            "settlement_hash": settlement_hash,
+            "timestamp": time.time()
+        }

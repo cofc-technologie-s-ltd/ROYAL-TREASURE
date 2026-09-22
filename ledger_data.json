@@ -1,0 +1,52 @@
+{
+    "balances": {
+        "COFC_VALIDATOR_1": {
+            "GOLD": 990.0
+        },
+        "TREASURY_ROOT": {
+            "GOLD": 1010.0
+        }
+    },
+    "transactions": [
+        {
+            "tx_id": "f234ed1f3ef14aade42b740f0f7f96ee64df06c2da5dbc04e4d7a897bb281732",
+            "sender": "COFC_VALIDATOR_1",
+            "recipient": "TREASURY_ROOT",
+            "amount": 2.0,
+            "asset": "GOLD",
+            "timestamp": 1790107468.7985919
+        },
+        {
+            "tx_id": "bbcdc6bd19cc4c2ab9231a66e227f2d3d840f11f34b38e07af0ae25293fce652",
+            "sender": "COFC_VALIDATOR_1",
+            "recipient": "TREASURY_ROOT",
+            "amount": 2.0,
+            "asset": "GOLD",
+            "timestamp": 1790107483.8007467
+        },
+        {
+            "tx_id": "811e8df9cefdbcae8f1e897ae9baac3f0f92384d1c0fd1195953221203df873b",
+            "sender": "COFC_VALIDATOR_1",
+            "recipient": "TREASURY_ROOT",
+            "amount": 2.0,
+            "asset": "GOLD",
+            "timestamp": 1790107498.803687
+        },
+        {
+            "tx_id": "1dc32aa519d00493e9fde073d6dfb7e3ee9cfafb7f94eb961c4b402836e85f57",
+            "sender": "COFC_VALIDATOR_1",
+            "recipient": "TREASURY_ROOT",
+            "amount": 2.0,
+            "asset": "GOLD",
+            "timestamp": 1790107513.8053343
+        },
+        {
+            "tx_id": "78bce18d8c2960b5b75a3ab1da7e377eb0c687fa53d5e5b1ed9af2e511929e98",
+            "sender": "COFC_VALIDATOR_1",
+            "recipient": "TREASURY_ROOT",
+            "amount": 2.0,
+            "asset": "GOLD",
+            "timestamp": 1790107528.8075647
+        }
+    ]
+}
