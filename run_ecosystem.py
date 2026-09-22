@@ -1,22 +1,23 @@
 import subprocess
 import time
 import sys
+import os
 
 def main():
     print("[*] Initializing ROYAL-TREASURE Sovereign Ecosystem v2.3 with GEM & AI...")
-    env = dict(sys.path)
+    os.environ["PYTHONPATH"] = os.getcwd()
     
     # Start Node Server
-    node_server = subprocess.Popen([sys.executable, "server/node_server.py"])
+    node_server = subprocess.Popen([sys.executable, "server/node_server.py"], env=os.environ)
     time.sleep(2)
     
     # Start Miners
-    miner_gold = subprocess.Popen([sys.executable, "miners/never_stop_miner.py", "GOLD"])
-    miner_key = subprocess.Popen([sys.executable, "miners/never_stop_miner.py", "KEY"])
-    miner_gem = subprocess.Popen([sys.executable, "miners/never_stop_miner.py", "GEM"])
+    miner_gold = subprocess.Popen([sys.executable, "miners/never_stop_miner.py", "GOLD"], env=os.environ)
+    miner_key = subprocess.Popen([sys.executable, "miners/never_stop_miner.py", "KEY"], env=os.environ)
+    miner_gem = subprocess.Popen([sys.executable, "miners/never_stop_miner.py", "GEM"], env=os.environ)
     
     # Start AI Daemon
-    ai_daemon = subprocess.Popen([sys.executable, "miners/absolute_mind_daemon.py"])
+    ai_daemon = subprocess.Popen([sys.executable, "miners/absolute_mind_daemon.py"], env=os.environ)
 
     print("========================================================")
     print("🚀 SOVEREIGN ECOSYSTEM (GOLD, KEY, GEM) + AI FULLY OPERATIONAL!")
