@@ -10,6 +10,7 @@ class AbsoluteMindEngine:
         self.cash_engine = CASHProtocolEngine()
         
     def evaluate_and_optimize_liquidity(self):
+        import time  # ייבוא מקומי מוודא שאין מצב שבו time לא מוגדר
         """מנתח את יתרות הנזילות בספר הראשי ומקבל החלטות ניהול ואיזון עצמאיות."""
         gold_bal = self.wallet_mgr.get_balance(self.node_address, "GOLD")
         key_bal = self.wallet_mgr.get_balance(self.node_address, "KEY")
