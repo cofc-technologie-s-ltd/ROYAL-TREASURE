@@ -1,65 +1,58 @@
-import os
+import time
 import json
-import hashlib
-from datetime import datetime
+import os
 
 class SovereignLedger:
-    def __init__(self, data_dir="data"):
-        self.ledger_file = os.path.join(data_dir, "blockchain_ledger.json")
-        self.state_file = os.path.join(data_dir, "treasury_state.json")
-        os.makedirs(data_dir, exist_ok=True)
-        self.init_ledger()
+    def __init__(self, ledger_file="ledger_data.json"):
+        self.ledger_file = ledger_file
+        self.balances = {}
+        self.transactions = []
+        self.load_ledger()
 
-    def init_ledger(self):
-        if not os.path.exists(self.ledger_file):
-            genesis_block = {
-                "height": 1,
-                "previous_hash": "0"*128,
-                "hash": hashlib.sha3_512(b"ROYAL_TREASURE_GENESIS_2026").hexdigest(),
-                "validator": "COFC_GENESIS_ROOT",
-                "asset_type": "GOLD",
-                "timestamp": datetime.utcnow().isoformat(),
-                "payload": "Genesis Sovereign Anchor"
-            }
-            with open(self.ledger_file, "w") as f:
-                json.dump([genesis_block], f, indent=4)
+    def load_ledger(self):
+        if os.path.exists(self.ledger_file):
+            try:
+                with open(self.ledger_file, "r") as f:
+                    data = json.load(f)
+                    self.balances = data.get("balances", {})
+                    self.transactions = data.get("transactions", [])
+            except Exception:
+                pass
 
-        if not os.path.exists(self.state_file):
-            initial_state = {
-                "GOLD": {"circulating": 69000000, "mined": 12},
-                "KEY": {"circulating": 1000000, "staked": 450000},
-                "GEM": {"circulating": 500000000, "locked": 120000000}
-            }
-            with open(self.state_file, "w") as f:
-                json.dump(initial_state, f, indent=4)
-
-    def get_latest_block(self):
-        with open(self.ledger_file, "r") as f:
-            chain = json.load(f)
-        return chain[-1]
-
-    def append_block(self, validator, asset_type, block_hash):
-        with open(self.ledger_file, "r") as f:
-            chain = json.load(f)
-        
-        latest = chain[-1]
-        new_block = {
-            "height": latest["height"] + 1,
-            "previous_hash": latest["hash"],
-            "hash": block_hash,
-            "validator": validator,
-            "asset_type": asset_type,
-            "timestamp": datetime.utcnow().isoformat()
+    def save_ledger(self):
+        data = {
+            "balances": self.balances,
+            "transactions": self.transactions
         }
-        chain.append(new_block)
         with open(self.ledger_file, "w") as f:
-            json.dump(chain, f, indent=4)
+            json.dump(data, f, indent=4)
 
-        with open(self.state_file, "r") as f:
-            state = json.load(f)
-        if asset_type in state:
-            state[asset_type]["mined"] = state[asset_type].get("mined", 0) + 1
-        with open(self.state_file, "w") as f:
-            json.dump(state, f, indent=4)
+    def get_balance(self, address, asset_type):
+        if address not in self.balances:
+            self.balances[address] = {}
+        return self.balances[address].get(asset_type, 1000.0)  # ברירת מחדל התחלתית למנועים אם אין יתרה רשומה
 
-        return new_block["height"]
+    def record_transaction(self, sender, recipient, amount, asset_type, tx_id):
+        if sender != "TREASURY_ROOT":
+            sender_bal = self.get_balance(sender, asset_type)
+            if sender_bal < amount:
+                return {"status": "FAILED", "reason": "Insufficient balance"}
+            self.balances[sender][asset_type] = sender_bal - amount
+
+        if recipient not in self.balances:
+            self.balances[recipient] = {}
+        
+        rec_bal = self.balances[recipient].get(asset_type, 0.0)
+        self.balances[recipient][asset_type] = rec_bal + amount
+
+        tx = {
+            "tx_id": tx_id,
+            "sender": sender,
+            "recipient": recipient,
+            "amount": amount,
+            "asset": asset_type,
+            "timestamp": time.time()
+        }
+        self.transactions.append(tx)
+        self.save_ledger()
+        return {"status": "SUCCESS", "tx_id": tx_id}
