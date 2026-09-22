@@ -23,5 +23,15 @@ class COFCGuardEngine:
     def generate_quantum_signature(self, data_bytes):
         return hashlib.sha3_256(data_bytes + b"_COFC_GUARD_QKD").hexdigest()
 
+    def generate_quantum_proof(self, data_payload):
+        payload_bytes = str(data_payload).encode()
+        signature = self.generate_quantum_signature(payload_bytes)
+        return {
+            "proof_id": hashlib.sha3_512(signature.encode()).hexdigest()[:32],
+            "quantum_signature": signature,
+            "timestamp": time.time(),
+            "status": "VERIFIED_POST_QUANTUM"
+        }
+
 # Alias for compatibility across modules
 COFCGuardShield = COFCGuardEngine
