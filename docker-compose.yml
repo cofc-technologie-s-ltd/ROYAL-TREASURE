@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  royal-treasure-node:
+    build: .
+    container_name: cofc_enterprise_sovereign_node
+    restart: always
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./ledger_db.sqlite:/app/ledger_db.sqlite
+    environment:
+      - NODE_ID=COFC_PROD_NODE_01
+      - SECURE_LEDGER=ENABLED
