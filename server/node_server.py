@@ -1,13 +1,15 @@
 import http.server
 import json
 import urllib.parse
+import sys
+import os
 
-class SovereignHandler(http.server.BaseHTTPRequestHandler):
-    block_height = 1
-    total_gold = 69000000
-    total_key = 1000000
-    active_miners = 1
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from core.ledger import SovereignLedger
 
+ledger = SovereignLedger()
+
+class EnterpriseSovereignHandler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
         parsed_path = urllib.parse.urlparse(self.path)
         path = parsed_path.path
@@ -17,28 +19,28 @@ class SovereignHandler(http.server.BaseHTTPRequestHandler):
         self.end_headers()
 
         if "/api/v1/network/status" in path:
+            latest = ledger.get_latest_block()
+            with open("data/treasury_state.json", "r") as sf:
+                state = json.load(sf)
             response = {
-                "block_height": self.block_height,
-                "active_miners": self.active_miners,
-                "total_gold": self.total_gold,
-                "total_key": self.total_key,
-                "status": "ONLINE_SOVEREIGN"
+                "node": "COFC-ENTERPRISE-NODE-v2",
+                "consensus": "RPoS-SHA3-512",
+                "block_height": latest["height"],
+                "assets": state,
+                "status": "SECURE_OPERATIONAL"
             }
-            self.wfile.write(json.dumps(response).encode())
+            self.wfile.write(json.dumps(response, indent=2).encode())
         elif "/api/v1/consensus/next_proposer" in path:
+            latest = ledger.get_latest_block()
             response = {
                 "next_proposer": "COFC_VALIDATOR_1",
-                "time_since_last_block": "15.0 seconds",
-                "latest_height": self.block_height
+                "latest_height": latest["height"],
+                "target_algorithm": "SHA3-512"
             }
-            self.wfile.write(json.dumps(response).encode())
+            self.wfile.write(json.dumps(response, indent=2).encode())
         elif "/api/v1/block/latest" in path:
-            response = {
-                "height": self.block_height,
-                "hash": "0xF7A9C4E2B91D55A3C0E4F89A6D7732EE7A1B5BFA9C3D11EE438B77A5F1D9C0AA",
-                "timestamp": "2026-03-30T10:00:00Z"
-            }
-            self.wfile.write(json.dumps(response).encode())
+            response = ledger.get_latest_block()
+            self.wfile.write(json.dumps(response, indent=2).encode())
         else:
             self.wfile.write(json.dumps({"status": "ok", "endpoint": path}).encode())
 
@@ -46,17 +48,29 @@ class SovereignHandler(http.server.BaseHTTPRequestHandler):
         content_length = int(self.headers.get('Content-Length', 0))
         post_data = self.rfile.read(content_length)
         
+        try:
+            data = json.loads(post_data.decode()) if post_data else {}
+        except:
+            data = {}
+
         self.send_response(200)
         self.send_header("Content-Type", "application/json")
         self.end_headers()
 
         if "/api/v1/mining/submit" in self.path:
-            SovereignHandler.block_height += 1
-            response = {"status": "success", "message": f"Block #{SovereignHandler.block_height} accepted by RPoS consensus."}
+            validator = data.get("validator_address", "COFC_VALIDATOR_1")
+            asset_type = data.get("asset_type", "GOLD")
+            block_hash = data.get("block_hash", "0"*128)
+            
+            new_height = ledger.append_block(validator, asset_type, block_hash)
+            response = {
+                "status": "success", 
+                "message": f"Block #{new_height} verified and anchored via RPoS.",
+                "height": new_height
+            }
             self.wfile.write(json.dumps(response).encode())
         elif "/api/v1/miner/register" in self.path:
-            response = {"status": "registered", "message": "Heartbeat acknowledged"}
-            self.wfile.write(json.dumps(response).encode())
+            self.wfile.write(json.dumps({"status": "registered", "gateway": "active"}).encode())
         else:
             self.wfile.write(json.dumps({"status": "success", "received": True}).encode())
 
@@ -64,6 +78,6 @@ class SovereignHandler(http.server.BaseHTTPRequestHandler):
         return
 
 if __name__ == "__main__":
-    server = http.server.HTTPServer(("127.0.0.1", 8545), SovereignHandler)
-    print("[+] Sovereign Node Server running on http://127.0.0.1:8545...")
+    server = http.server.HTTPServer(("127.0.0.1", 8545), EnterpriseSovereignHandler)
+    print("[+] Enterprise Sovereign Node v2.0 running on http://127.0.0.1:8545...")
     server.serve_forever()
