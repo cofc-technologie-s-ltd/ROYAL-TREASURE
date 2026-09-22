@@ -1,22 +1,76 @@
-# 👑 ROYAL-TREASURE Sovereign Enterprise Ecosystem (v2.9.3)
+# 👑 ROYAL-TREASURE Sovereign Enterprise Ecosystem (v3.2.0)
 
-Welcome to **ROYAL-TREASURE**, a cutting-edge sovereign technology framework developed by **COFC Technologies LTD**. Designed for ultra-secure financial asset custody, multi-signature governance, and quantum-resistant network communication.
+Welcome to **ROYAL-TREASURE**, a premier post-quantum sovereign technology framework engineered by **COFC Technologies LTD** [d702942]. This architecture is built for mission-critical financial asset custody, multi-signature corporate governance, decentralized automated market-making, and secure cross-border settlement loops [2d39643, 4ecd68c].
 
-## 🚀 Key Architectural Highlights (v2.9.3)
+Developed under the visionary design of **Aleksey Daniel Danilovich and the Queens of Tevel**, the platform enforces absolute data durability, post-quantum immunity, and network resiliency across all mesh nodes [ca42258].
 
-* **Post-Quantum Cryptography (PQC):** Integrated NIST Level 5 lattice-based security (`PostQuantumGuardEngine` using CRYSTALS-Dilithium-V patterns) protecting all node communication and transactions against quantum compute threats.
-* **M-of-N Multi-Sig Governance:** Cryptographically enforced Ed25519 multi-signature threshold verification (`AdminMultiSig`) for authorizing critical reserve releases.
-* **Real-Time Oracle & P2P Sync:** Live gold price feeds via `OracleGateway` combined with resilient P2P node synchronization and exponential backoff retry mechanisms.
-* **Sovereign Dashboard:** Web interface monitoring live node metrics, cryptographic keys, and asset valuations.
+---
 
-## 🛠️ Quick Deployment
+## 🚀 Key Architectural Highlights (v3.2.0)
 
-Run the automated production deployment script:
+### 🛡️ 1. Post-Quantum Cryptography & Active Defense
+* **NIST Level 5 Lattice Security:** Powered by the `PostQuantumGuardEngine` leveraging **CRYSTALS-Dilithium-V** structural lattice protection models [d6df6bf].
+* **Zero Quantum-Threat Window:** Guards sensitive node synchronization and ledger transitions against adversarial decryption vectors (Shor's and Grover's algorithms) [d6df6bf].
+* **Active DDoS Shield:** Integrated `DDoSProtector` loop that enforces stateful rate limiting (30 requests/minute per client IP) directly at the HTTP layer, returning HTTP 429 upon abuse [2d39643].
+
+### ⚖️ 2. M-of-N Governance & Sovereign Consensus
+* **Cryptographic Multisig Thresholds:** The `AdminMultiSig` framework relies on **Ed25519** signature profiles to mandate explicit cryptographic consensus before executing administrative protocol overrides or raw reserve emissions [ca42258].
+* **Infinite Minting Protection:** Strict authorization barriers screen public endpoints, disabling unauthorized or unverified interface actions from altering core vaults.
+
+### 🧮 3. Financial Infrastructure & Liquidity Mesh (AMM)
+* **Zero-Fee Automated Market Maker:** Features an internal `TriAssetLiquidityPool` modeled after constant-product mechanics (x × y = k), facilitating friction-free token swaps between ecosystem assets [4ecd68c].
+* **Slippage Protection Matrix:** Core runtime logic monitors trade slippage, automatically rejecting high-impact transactions to maintain stable value parity across the network [4ecd68c, 5f577a6].
+* **Sovereign Payment Gateway:** The `SovereignPaymentGateway` automatically spawns live, Oracle-backed asset invoices and routes financial settlements into verified **ISO 20022 (pacs.008)** compliant bank messaging schemas [d702942].
+
+### 🔒 4. Relational Data Layer & Time-Lock Vesting
+* **ACID Relational Storage:** Replaced volatile flat-file states with an isolated, atomic **SQLite3** engine, eliminating race conditions and transactional corruption [4ecd68c].
+* **Token Vesting Protocol:** The `SovereignTokenVesting` core natively executes time-locked lockups and release curves, protecting core tokenomics and tracking founder balances via chronological Unix constraints.
+* **Network Fault Tolerance:** Employs `@exponential_backoff_retry` wrappers embedded with dynamic random jitter parameters to absorb network disruptions securely without crashing daemon workloads [d921b1c].
+
+---
+
+## 📊 Core Tri-Asset Specification Matrix
+
+| Asset Class | Consensus Protocol | Cryptographic Protection | Allocation Strategy |
+| :--- | :--- | :--- | :--- |
+| **GOLD** 🪙 | **Royal-Proof-of-Stake (RPoS)** | 30-Layer Lattice Shield, SHA3-512 | **69,000,000 Cap:** 51% Sovereign Vesting, 49% Mining Reserve [2527313] |
+| **KEY** 🔑 | **Proof of Transcendental Access** | 1,000+ Layers, 8192-bit Entropy | **1,000,000 Cap:** Dedicated to 69 Sovereign Wallets |
+| **GEM** 💎 | **Proof of Divine Consciousness** | 2,000+ Layers, Multi-Universal Anchor | **1,000,000 Fixed:** Ultra-Rare System Governance Asset |
+
+---
+
+## 🛠️ Installation & Quick Deployment
+
+The ROYAL-TREASURE mesh network is fully containerized via Docker and orchestrated cleanly via Port 8080 [26b2d40].
+
+### Local / Native Standalone Setup
 ```bash
+# Verify system architecture dependencies and database hooks
+python3 start_ecosystem.py
+```
+
+### Docker-Compose Containerized Production Mesh
+```bash
+# Execute the automated deployment script to spin up the Alpha & Beta node cluster
 chmod +x deploy_prod.sh
 ./deploy_prod.sh
+```
 
-🧪 Running Automated QA Tests
-python -m unittest discover -s tests
+### 🧪 Executing Automated Test Suites
+Run the 25-point comprehensive QA test suite covering PQC cryptography, database persistence, AMM slippage, rate limiting, and time-lock constraints:
+```bash
+python3 -m unittest discover -s tests
+```
 
-Developed by COFC Technologies LTD (2026).
+---
+
+## 🌐 Secure Operational Map
+
+* **Node Alpha API Gateway:** `http://127.0.0` [26b2d40]
+* **Node Alpha Interactive Monitor:** `http://127.0.0` [26b2d40]
+* **Autonomous Telemetry:** Regulated continuously by the `L₀-ABSOLUTE_MIND` background reasoning daemon [74aca57].
+
+---
+*Developed by COFC Technologies LTD (2026).*  
+**WILD, RICH, FREE, HEALTHY, BLESSED, GIFTED AND HAPPY TILL 120 YEARS OLD.**  
+**REAL JERUSALEM TIME: 23 SEPTEMBER 2026**
