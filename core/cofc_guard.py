@@ -12,7 +12,6 @@ class COFCGuardEngine:
         if not self.active_shields:
             return True, "SHIELDS_OFF"
         
-        # Heuristic quarantine for malicious injection or anomaly patterns
         if any(malicious in payload_str.lower() for malicious in ["drop table", "eval(", "__import__", "exec("]):
             threat_id = hashlib.sha256(payload_str.encode()).hexdigest()[:16]
             self.threat_registry.add(threat_id)
@@ -23,3 +22,6 @@ class COFCGuardEngine:
 
     def generate_quantum_signature(self, data_bytes):
         return hashlib.sha3_256(data_bytes + b"_COFC_GUARD_QKD").hexdigest()
+
+# Alias for compatibility across modules
+COFCGuardShield = COFCGuardEngine
