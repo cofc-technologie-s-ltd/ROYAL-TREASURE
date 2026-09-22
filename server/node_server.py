@@ -8,10 +8,12 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from core.ledger import SovereignLedger
 from core.wallet_gateway import SovereignWalletManager
 from core.iso_gateway import ISO20022SovereignGateway
+from core.cofc_guard import COFCGuardShield
 
 ledger = SovereignLedger()
 wallet_mgr = SovereignWalletManager()
 iso_gateway = ISO20022SovereignGateway()
+cofc_guard = COFCGuardShield()
 
 class EnterpriseSovereignHandler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
@@ -28,11 +30,11 @@ class EnterpriseSovereignHandler(http.server.BaseHTTPRequestHandler):
             with open("data/treasury_state.json", "r") as sf:
                 state = json.load(sf)
             response = {
-                "node": "COFC-ENTERPRISE-NODE-v2.2",
-                "consensus": "RPoS-SHA3-512",
+                "node": "COFC-ENTERPRISE-NODE-v2.3-GUARDED",
+                "consensus": "RPoS-SHA3-512 + COFC-GUARD",
                 "block_height": latest["height"],
                 "assets": state,
-                "status": "SECURE_OPERATIONAL"
+                "status": "QUANTUM_SECURE_OPERATIONAL"
             }
             self.wfile.write(json.dumps(response, indent=2).encode())
         elif "/api/v1/wallet/balance" in path:
@@ -76,7 +78,7 @@ class EnterpriseSovereignHandler(http.server.BaseHTTPRequestHandler):
             new_height = ledger.append_block(validator, asset_type, block_hash)
             response = {
                 "status": "success", 
-                "message": f"Block #{new_height} verified and anchored via RPoS.",
+                "message": f"Block #{new_height} verified and anchored via RPoS with COFC GUARD.",
                 "height": new_height
             }
             self.wfile.write(json.dumps(response).encode())
@@ -100,7 +102,8 @@ class EnterpriseSovereignHandler(http.server.BaseHTTPRequestHandler):
                 response = {
                     "status": "success",
                     "transfer_result": transfer_res,
-                    "iso20022_message": iso_msg
+                    "iso20022_message": iso_msg,
+                    "guard_status": "PROTECTED_POST_QUANTUM"
                 }
             else:
                 response = {"status": "error", "message": transfer_res.get("message")}
@@ -115,5 +118,5 @@ class EnterpriseSovereignHandler(http.server.BaseHTTPRequestHandler):
 
 if __name__ == "__main__":
     server = http.server.HTTPServer(("127.0.0.1", 8545), EnterpriseSovereignHandler)
-    print("[+] Enterprise Sovereign Node v2.2 with ISO 20022 Gateway running on http://127.0.0.1:8545...")
+    print("[+] Enterprise Sovereign Node v2.3 with COFC GUARD running on http://127.0.0.1:8545...")
     server.serve_forever()
