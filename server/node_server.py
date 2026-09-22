@@ -7,9 +7,11 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from core.ledger import SovereignLedger
 from core.wallet_gateway import SovereignWalletManager
+from core.iso_gateway import ISO20022SovereignGateway
 
 ledger = SovereignLedger()
 wallet_mgr = SovereignWalletManager()
+iso_gateway = ISO20022SovereignGateway()
 
 class EnterpriseSovereignHandler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
@@ -26,7 +28,7 @@ class EnterpriseSovereignHandler(http.server.BaseHTTPRequestHandler):
             with open("data/treasury_state.json", "r") as sf:
                 state = json.load(sf)
             response = {
-                "node": "COFC-ENTERPRISE-NODE-v2",
+                "node": "COFC-ENTERPRISE-NODE-v2.2",
                 "consensus": "RPoS-SHA3-512",
                 "block_height": latest["height"],
                 "assets": state,
@@ -86,6 +88,23 @@ class EnterpriseSovereignHandler(http.server.BaseHTTPRequestHandler):
 
             res = wallet_mgr.transfer_asset(sender, recipient, asset_type, amount)
             self.wfile.write(json.dumps(res).encode())
+        elif "/api/v1/institutional/iso20022_settlement" in self.path:
+            sender = data.get("sender", "COFC_VALIDATOR_1")
+            recipient = data.get("recipient", "TREASURY_ROOT")
+            asset_type = data.get("asset_type", "GOLD")
+            amount = float(data.get("amount", 0.0))
+
+            transfer_res = wallet_mgr.transfer_asset(sender, recipient, asset_type, amount)
+            if transfer_res.get("status") == "success":
+                iso_msg = iso_gateway.generate_pacs008_settlement(sender, recipient, asset_type, amount)
+                response = {
+                    "status": "success",
+                    "transfer_result": transfer_res,
+                    "iso20022_message": iso_msg
+                }
+            else:
+                response = {"status": "error", "message": transfer_res.get("message")}
+            self.wfile.write(json.dumps(response, indent=2).encode())
         elif "/api/v1/miner/register" in self.path:
             self.wfile.write(json.dumps({"status": "registered", "gateway": "active"}).encode())
         else:
@@ -96,5 +115,5 @@ class EnterpriseSovereignHandler(http.server.BaseHTTPRequestHandler):
 
 if __name__ == "__main__":
     server = http.server.HTTPServer(("127.0.0.1", 8545), EnterpriseSovereignHandler)
-    print("[+] Enterprise Sovereign Node v2.1 with Wallet Gateway running on http://127.0.0.1:8545...")
+    print("[+] Enterprise Sovereign Node v2.2 with ISO 20022 Gateway running on http://127.0.0.1:8545...")
     server.serve_forever()
