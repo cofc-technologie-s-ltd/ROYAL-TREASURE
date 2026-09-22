@@ -1,12 +1,12 @@
-# 👑 ROYAL-TREASURE Sovereign Enterprise Ecosystem (v3.3.0)
+# 👑 ROYAL-TREASURE Sovereign Enterprise Ecosystem (v3.3.3)
 
-Welcome to **ROYAL-TREASURE**, a premier post-quantum sovereign technology framework engineered by **COFC Technologies LTD** [d702942]. This architecture is built for mission-critical financial asset custody, multi-signature corporate governance, decentralized automated market-making, secure cross-border settlement loops [2d39643, 4ecd68c], and air-gapped hardware cold storage management [2f79317].
+Welcome to **ROYAL-TREASURE**, a premier post-quantum sovereign technology framework engineered by **COFC Technologies LTD** [d702942]. This architecture is built for mission-critical financial asset custody, multi-signature corporate governance, decentralized automated market-making, secure cross-border settlement loops [2d39643, 4ecd68c], air-gapped hardware cold storage management [2f79317], and decentralized telephony/SMS payment routing.
 
 Developed under the visionary design of **Aleksey Daniel Danilovich and the Queens of Tevel**, the platform enforces absolute data durability, post-quantum immunity, and network resiliency across all mesh nodes [ca42258].
 
 ---
 
-## 🚀 Key Architectural Highlights (v3.3.0)
+## 🚀 Key Architectural Highlights (v3.3.3)
 
 ### 🛡️ 1. Post-Quantum Cryptography & Active Defense
 * **NIST Level 5 Lattice Security:** Powered by the `PostQuantumGuardEngine` leveraging **CRYSTALS-Dilithium-V** structural lattice protection models [d6df6bf].
@@ -22,7 +22,12 @@ Developed under the visionary design of **Aleksey Daniel Danilovich and the Quee
 * **Slippage Protection Matrix:** Core runtime logic monitors trade slippage, automatically rejecting high-impact transactions to maintain stable value parity across the network [4ecd68c, 5f577a6].
 * **Sovereign Payment Gateway:** The `SovereignPaymentGateway` automatically spawns live, Oracle-backed asset invoices and routes financial settlements into verified **ISO 20022 (pacs.008)** compliant bank messaging schemas [d702942].
 
-### 🔒 4. Relational Data Layer, Time-Lock Vesting & Hardware Vault
+### 📞 4. Telephony-to-Wallet & Offline SMS Gateway
+* **Phone-to-Wallet Mapping:** The `SovereignTelephonyGateway` seamlessly binds international and local phone numbers (such as `+972515386542`) directly to sovereign ecosystem wallets for simplified address resolution.
+* **Offline SMS Transactions:** Empowers users in non-internet or air-gapped environments to securely route asset transfers and settlement instructions via dedicated SMS relay messaging centers.
+* **Granular Security Controls:** Enforces multi-factor PIN verification (`pin_code`), maximum single-transfer thresholds (`max_single_transfer`), and daily spending limits (`daily_limit`) to prevent financial exposure.
+
+### 🔒 5. Relational Data Layer, Time-Lock Vesting & Hardware Vault
 * **ACID Relational Storage:** Replaced volatile flat-file states with an isolated, atomic **SQLite3** engine, eliminating race conditions and transactional corruption [4ecd68c].
 * **Token Vesting Protocol:** The `SovereignTokenVesting` core natively executes time-locked lockups and release curves, protecting core tokenomics and tracking founder balances via chronological Unix constraints [2527313].
 * **Air-Gapped Hardware Vault:** Integrated `SovereignHardwareVault` controller for generating secure physical entropy and executing offline dual PQC and Ed25519 signatures in an isolated environment [2f79317].
@@ -59,7 +64,7 @@ chmod +x deploy_prod.sh
 ./deploy_prod.sh
 
 🧪 Executing Automated Test Suites
-Run the comprehensive 27-point QA test suite covering PQC cryptography, database persistence, AMM slippage, rate limiting, time-lock constraints, and hardware vault dual-signing:
+Run the comprehensive QA test suite covering PQC cryptography, database persistence, AMM slippage, rate limiting, time-lock constraints, hardware vault dual-signing, and telephony SMS routing:
 python3 -m unittest discover -s tests
 
 🌐 Secure Operational Map
@@ -67,10 +72,8 @@ python3 -m unittest discover -s tests
  * Node Alpha Interactive Monitor: http://127.0.0 [26b2d40]
  * Autonomous Telemetry: Regulated continuously by the L₀-ABSOLUTE_MIND background reasoning daemon [74aca57].
 Developed by COFC Technologies LTD (2026).
-
-
 BEST REGARDS,
 ALEKSEY DANIEL DANILOVICH AND MY WIVES
 THE KING AND THE QUEENS OF TEVEL
 WILD, RICH, FREE, HEALTHY, BLESSED, GIFTED AND HAPPY TILL 120 YEARS OLD
-23 SEPTEMBER 2026 1:23 AM REAL JERUSALEM TIME
+REAL JERUSALEM TIME: 23 SEPTEMBER 2026 1:23 AM
